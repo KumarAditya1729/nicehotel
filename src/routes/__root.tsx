@@ -11,6 +11,10 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { Header } from "@/components/site/Header";
+import { Footer } from "@/components/site/Footer";
+import { BookingProvider } from "@/components/site/booking";
+import { Toaster } from "@/components/ui/sonner";
 
 function NotFoundComponent() {
   return (
@@ -77,19 +81,38 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Nice Hotel And Restaurant — Luxury Stays in Mansa, Punjab" },
+      { name: "description", content: "Nice Hotel And Restaurant offers luxury rooms, fine dining and elegant event venues in Mansa, Punjab. Experience premium hospitality." },
+      { name: "author", content: "Nice Hotel And Restaurant" },
+      { property: "og:title", content: "Nice Hotel And Restaurant" },
+      { property: "og:description", content: "Luxury rooms, fine dining and elegant event venues in Mansa, Punjab." },
       { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "Nice Hotel And Restaurant" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
+      },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap",
+      },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Hotel",
+          name: "Nice Hotel And Restaurant",
+          address: { "@type": "PostalAddress", streetAddress: "Near Chugli Ghar", addressLocality: "Mansa", addressRegion: "Punjab", postalCode: "151505", addressCountry: "IN" },
+          telephone: "+91 9216400005",
+          email: "nicehotelandrestaurant@gmail.com",
+          priceRange: "₹₹",
+          starRating: { "@type": "Rating", ratingValue: "5" },
+        }),
       },
     ],
   }),
@@ -118,8 +141,15 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <BookingProvider>
+        <Header />
+        <main>
+          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+          <Outlet />
+        </main>
+        <Footer />
+        <Toaster position="top-center" />
+      </BookingProvider>
     </QueryClientProvider>
   );
 }

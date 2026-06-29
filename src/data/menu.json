@@ -1,0 +1,1313 @@
+[
+ {
+  "category": "Beverages",
+  "items": [
+   {
+    "name": "Lassi Sweet/Salt",
+    "price": "₹60"
+   },
+   {
+    "name": "Mineral Water",
+    "price": "₹20"
+   },
+   {
+    "name": "Fresh Lime Soda",
+    "price": "₹70"
+   },
+   {
+    "name": "Fresh Lime Water",
+    "price": "₹60"
+   },
+   {
+    "name": "Soda (600ml)",
+    "price": "₹40"
+   },
+   {
+    "name": "Lime Cordial Juice (30ml)",
+    "price": "₹40"
+   },
+   {
+    "name": "Soft Drink (300ml)",
+    "price": "₹30"
+   },
+   {
+    "name": "Soft Drink (500ml)",
+    "price": "₹50"
+   },
+   {
+    "name": "Soft Drink (1Ltr)",
+    "price": "₹70"
+   },
+   {
+    "name": "Ice Cube Basket",
+    "price": "₹40"
+   },
+   {
+    "name": "Milk",
+    "price": "₹50"
+   },
+   {
+    "name": "Hot Coffee",
+    "price": "₹50"
+   },
+   {
+    "name": "Cold Coffee",
+    "price": "₹80"
+   },
+   {
+    "name": "Cold Coffee with Ice Cream",
+    "price": "₹90"
+   },
+   {
+    "name": "Black Tea",
+    "price": "₹30"
+   },
+   {
+    "name": "Elaichi Flavour Tea",
+    "price": "₹20"
+   }
+  ]
+ },
+ {
+  "category": "Juice",
+  "items": [
+   {
+    "name": "Pineapple",
+    "price": "₹70"
+   },
+   {
+    "name": "Orange",
+    "price": "₹70"
+   },
+   {
+    "name": "Guava",
+    "price": "₹70"
+   },
+   {
+    "name": "Mango",
+    "price": "₹70"
+   },
+   {
+    "name": "Apple",
+    "price": "₹70"
+   },
+   {
+    "name": "Mix Juice",
+    "price": "₹70"
+   }
+  ]
+ },
+ {
+  "category": "Shakes",
+  "items": [
+   {
+    "name": "Vanilla",
+    "price": "₹80"
+   },
+   {
+    "name": "Butter Scotch",
+    "price": "₹80"
+   },
+   {
+    "name": "Chocolate",
+    "price": "₹80"
+   },
+   {
+    "name": "Tutti Fruit Shake",
+    "price": "₹100"
+   },
+   {
+    "name": "Kaju Kishmish Shake",
+    "price": "₹80"
+   },
+   {
+    "name": "Milk Shake",
+    "price": "₹70"
+   }
+  ]
+ },
+ {
+  "category": "Breakfast",
+  "items": [
+   {
+    "name": "Veg Sandwich (Cold)",
+    "price": "₹80"
+   },
+   {
+    "name": "Veg Sandwich (Grilled)",
+    "price": "₹120"
+   },
+   {
+    "name": "Non-Veg Sandwich (Grilled)",
+    "price": "₹220"
+   },
+   {
+    "name": "Butter Toast",
+    "price": "₹70"
+   },
+   {
+    "name": "Toast with Egg",
+    "price": "₹100"
+   },
+   {
+    "name": "Jam Toast",
+    "price": "₹100"
+   },
+   {
+    "name": "Omelette with Slice (2 Pcs.)",
+    "price": "₹120"
+   },
+   {
+    "name": "Bread Slice (2Pcs)",
+    "price": "₹30"
+   }
+  ]
+ },
+ {
+  "category": "Soups",
+  "items": [
+   {
+    "name": "Tomato Soup",
+    "price": "₹80"
+   },
+   {
+    "name": "Veg Soup",
+    "price": "₹80"
+   },
+   {
+    "name": "Clear Soup (Veg/Chicken)",
+    "price": "₹100 | ₹130"
+   },
+   {
+    "name": "Hot Sour Soup (Veg/Chicken)",
+    "price": "₹100 | ₹130"
+   },
+   {
+    "name": "Wonton Soup (Veg/Chicken)",
+    "price": "₹100 | ₹130"
+   },
+   {
+    "name": "Sweet Corn Soup (Veg/Chicken)",
+    "price": "₹100 | ₹130"
+   },
+   {
+    "name": "Manchow Soup (Veg/Chicken)",
+    "price": "₹100 | ₹130"
+   },
+   {
+    "name": "Talumein Soup (Veg/Chicken)",
+    "price": "₹100 | ₹130"
+   },
+   {
+    "name": "Lemon Corriender (Veg/Chicken)",
+    "price": "₹100 | ₹130"
+   },
+   {
+    "name": "Chicken Soup",
+    "price": "₹130"
+   }
+  ]
+ },
+ {
+  "category": "Veg Starters",
+  "items": [
+   {
+    "name": "Paneer Papdi Kabab",
+    "price": "₹200"
+   },
+   {
+    "name": "Cheese Ball",
+    "price": "₹250"
+   },
+   {
+    "name": "Paneer Candy",
+    "price": "₹250"
+   },
+   {
+    "name": "Veg Ball",
+    "price": "₹230"
+   },
+   {
+    "name": "Cheese Corn Ball",
+    "price": "₹280"
+   },
+   {
+    "name": "Crispy Corn",
+    "price": "₹170"
+   },
+   {
+    "name": "Dry Papad/Fry Papad",
+    "price": "₹30"
+   },
+   {
+    "name": "Masala Papad",
+    "price": "₹70"
+   },
+   {
+    "name": "Veg Bar Salad",
+    "price": "₹180"
+   },
+   {
+    "name": "Mushroom Double Decker",
+    "price": "₹280"
+   },
+   {
+    "name": "Mushroom Duplex",
+    "price": "₹200"
+   },
+   {
+    "name": "Chana Chaat",
+    "price": "₹100"
+   },
+   {
+    "name": "Plain Peanut",
+    "price": "₹90"
+   },
+   {
+    "name": "Peanut Massala",
+    "price": "₹100"
+   },
+   {
+    "name": "Mix Chaat",
+    "price": "₹130"
+   },
+   {
+    "name": "Veg Pakora",
+    "price": "₹150"
+   },
+   {
+    "name": "Paneer Pakora",
+    "price": "₹250"
+   },
+   {
+    "name": "Hara Bhara Cocktail Kabab",
+    "price": "₹160"
+   },
+   {
+    "name": "Veg Cutlet",
+    "price": "₹220"
+   },
+   {
+    "name": "Cheese Finger",
+    "price": "₹200"
+   },
+   {
+    "name": "Plain Paneer with Collandu",
+    "price": "₹250"
+   },
+   {
+    "name": "Cheese Corn Roll",
+    "price": "₹200"
+   },
+   {
+    "name": "Palak Cheese Corn Roll",
+    "price": "₹280"
+   }
+  ]
+ },
+ {
+  "category": "Tandoori Veg Starters",
+  "items": [
+   {
+    "name": "Paneer Tikka",
+    "price": "₹270"
+   },
+   {
+    "name": "Vegetable Seekh Kabab",
+    "price": "₹280"
+   },
+   {
+    "name": "Mushroom Tikka",
+    "price": "₹270"
+   },
+   {
+    "name": "Paneer Haryali Tikka",
+    "price": "₹270"
+   },
+   {
+    "name": "Paneer Malai Tikka",
+    "price": "₹270"
+   },
+   {
+    "name": "Lemon Paneer Tikka",
+    "price": "₹270"
+   },
+   {
+    "name": "Tandoori Veg Platter",
+    "price": "₹430"
+   },
+   {
+    "name": "Mushroom Achari Tikka",
+    "price": "₹280"
+   },
+   {
+    "name": "Mushroom Ajwain Tikka",
+    "price": "₹280"
+   },
+   {
+    "name": "Tandoori Gobhi",
+    "price": "₹280"
+   },
+   {
+    "name": "Bharwa Aloo",
+    "price": "₹250"
+   }
+  ]
+ },
+ {
+  "category": "Chinese Veg Starters",
+  "items": [
+   {
+    "name": "Mushroom Garlic",
+    "price": "₹300"
+   },
+   {
+    "name": "Thai Ball",
+    "price": "₹260"
+   },
+   {
+    "name": "Veg Manchurian (Dry/Gravy)",
+    "price": "₹200"
+   },
+   {
+    "name": "Cheese Manchurian",
+    "price": "₹300"
+   },
+   {
+    "name": "Mix Veg Spring Roll",
+    "price": "₹200"
+   },
+   {
+    "name": "Cheese Spring Roll",
+    "price": "₹200"
+   },
+   {
+    "name": "Chilli Potato",
+    "price": "₹250"
+   },
+   {
+    "name": "Crispy Veg Chilly",
+    "price": "₹250"
+   },
+   {
+    "name": "Cheese Chilly (Dry/Gravy)",
+    "price": "₹280-300"
+   },
+   {
+    "name": "Mushroom Chilly",
+    "price": "₹280"
+   },
+   {
+    "name": "Veg Bullet",
+    "price": "₹200"
+   },
+   {
+    "name": "Veg Cocktail Kabab",
+    "price": "₹180"
+   },
+   {
+    "name": "Honey Chilly Potato",
+    "price": "₹200"
+   },
+   {
+    "name": "Honey Chilly Cauliflower",
+    "price": "₹120"
+   },
+   {
+    "name": "French Fry (Indian Style)",
+    "price": "₹120"
+   },
+   {
+    "name": "French Fry (American Style)",
+    "price": "₹170"
+   },
+   {
+    "name": "Veg Noodle",
+    "price": "₹150"
+   },
+   {
+    "name": "Cheese Noodle",
+    "price": "₹200"
+   },
+   {
+    "name": "Singhapuri Chowmin",
+    "price": "₹200"
+   },
+   {
+    "name": "Garlic Noodles Veg",
+    "price": "₹180"
+   },
+   {
+    "name": "Veg Hakka Noodles",
+    "price": "₹180"
+   },
+   {
+    "name": "Veg Fried Rice",
+    "price": "₹220"
+   },
+   {
+    "name": "Cheese Fried Rice",
+    "price": "₹250"
+   },
+   {
+    "name": "Chicken Hakka Noodles",
+    "price": "₹200"
+   }
+  ]
+ },
+ {
+  "category": "Non-Veg Starters",
+  "items": [
+   {
+    "name": "Crispy Honey Chicken (Half)",
+    "price": "₹300"
+   },
+   {
+    "name": "Crispy Honey Chicken (Full)",
+    "price": "₹450"
+   },
+   {
+    "name": "Chicken Lollipop (4PC - Half)",
+    "price": "₹250"
+   },
+   {
+    "name": "Chicken Lollipop (8PC - Full)",
+    "price": "₹450"
+   },
+   {
+    "name": "Egg Chilly",
+    "price": "₹250"
+   },
+   {
+    "name": "Chilly Chicken (Dry/Gravy - Half)",
+    "price": "₹300"
+   },
+   {
+    "name": "Chilly Chicken (Dry/Gravy - Full)",
+    "price": "₹450"
+   },
+   {
+    "name": "Chilly Chicken Boneless (Half)",
+    "price": "₹320"
+   },
+   {
+    "name": "Chilly Chicken Boneless (Full)",
+    "price": "₹450"
+   },
+   {
+    "name": "Chicken Fried Rice",
+    "price": "₹270"
+   },
+   {
+    "name": "Egg Fried Rice",
+    "price": "₹250"
+   },
+   {
+    "name": "Chicken Spring Roll",
+    "price": "₹250"
+   },
+   {
+    "name": "Chicken Manchurian (Half)",
+    "price": "₹300"
+   },
+   {
+    "name": "Chicken Manchurian (Full)",
+    "price": "₹450"
+   },
+   {
+    "name": "Egg Chowmin",
+    "price": "₹220"
+   },
+   {
+    "name": "Chicken Chowmin",
+    "price": "₹300"
+   },
+   {
+    "name": "Chicken 65 (Half)",
+    "price": "₹300"
+   },
+   {
+    "name": "Chicken 65 (Full)",
+    "price": "₹450"
+   },
+   {
+    "name": "Chicken Pakora (Half)",
+    "price": "₹300"
+   },
+   {
+    "name": "Chicken Pakora (Full)",
+    "price": "₹450"
+   },
+   {
+    "name": "Chicken Pakora KFC (Half)",
+    "price": "₹300"
+   },
+   {
+    "name": "Chicken Pakora KFC (Full)",
+    "price": "₹470"
+   }
+  ]
+ },
+ {
+  "category": "Tandoori Non-Veg Starters",
+  "items": [
+   {
+    "name": "Afghani Chicken (Simple - Half)",
+    "price": "₹300"
+   },
+   {
+    "name": "Afghani Chicken (Simple - Full)",
+    "price": "₹450"
+   },
+   {
+    "name": "Tandoori Chicken (Half)",
+    "price": "₹280"
+   },
+   {
+    "name": "Tandoori Chicken (Full)",
+    "price": "₹450"
+   },
+   {
+    "name": "Kalami Kabab (8PC - Half)",
+    "price": "₹300"
+   },
+   {
+    "name": "Kalami Kabab (4PC - Full)",
+    "price": "₹450"
+   },
+   {
+    "name": "Chicken Cheese Kabab",
+    "price": "₹350"
+   },
+   {
+    "name": "Chicken Achari Tikka",
+    "price": "₹350"
+   },
+   {
+    "name": "Murg Kali Mirch Tikka",
+    "price": "₹350"
+   },
+   {
+    "name": "Stuffed Afgani Chicken Full",
+    "price": "₹550"
+   },
+   {
+    "name": "Pudina Chicken (Half)",
+    "price": "₹300"
+   },
+   {
+    "name": "Pudina Chicken (Full)",
+    "price": "₹450"
+   },
+   {
+    "name": "Stuff Tangri Peminan (2PC - Half)",
+    "price": "₹300"
+   },
+   {
+    "name": "Stuff Tangri Peminan (4PC - Full)",
+    "price": "₹450"
+   },
+   {
+    "name": "White Tandoori Chicken (Half)",
+    "price": "₹300"
+   },
+   {
+    "name": "White Tandoori Chicken (Full)",
+    "price": "₹470"
+   },
+   {
+    "name": "Chicken Seekh Kabab",
+    "price": "₹350"
+   },
+   {
+    "name": "Chicken Malai Tikka",
+    "price": "₹350"
+   },
+   {
+    "name": "Chicken Tikka",
+    "price": "₹350"
+   },
+   {
+    "name": "Non-Veg Platter (Bar Salad)",
+    "price": "₹600"
+   }
+  ]
+ },
+ {
+  "category": "Salad",
+  "items": [
+   {
+    "name": "Green Salad",
+    "price": "₹70"
+   },
+   {
+    "name": "Onion Salad",
+    "price": "₹50"
+   },
+   {
+    "name": "Kachumber Salad",
+    "price": "₹60"
+   },
+   {
+    "name": "Cream Kachumber Salad",
+    "price": "₹100"
+   }
+  ]
+ },
+ {
+  "category": "Raita",
+  "items": [
+   {
+    "name": "Mix Veg Raita",
+    "price": "₹80"
+   },
+   {
+    "name": "Aloo Raita",
+    "price": "₹80"
+   },
+   {
+    "name": "Pineapple Raita",
+    "price": "₹130"
+   },
+   {
+    "name": "Bundi Raita",
+    "price": "₹100"
+   },
+   {
+    "name": "Palak Cheese Corn Roll",
+    "price": "₹280"
+   }
+  ]
+ },
+ {
+  "category": "Rice",
+  "items": [
+   {
+    "name": "Paneer Tikka",
+    "price": "₹270"
+   },
+   {
+    "name": "Vegetable Seekh Kabab",
+    "price": "₹280"
+   },
+   {
+    "name": "Mushroom Tikka",
+    "price": "₹270"
+   },
+   {
+    "name": "Paneer Haryali Tikka",
+    "price": "₹270"
+   },
+   {
+    "name": "Paneer Malai Tikka",
+    "price": "₹270"
+   },
+   {
+    "name": "Lemon Paneer Tikka",
+    "price": "₹270"
+   },
+   {
+    "name": "Tandoori Veg Platter",
+    "price": "₹430"
+   },
+   {
+    "name": "Mushroom Achari Tikka",
+    "price": "₹280"
+   },
+   {
+    "name": "Mushroom Ajwain Tikka",
+    "price": "₹280"
+   }
+  ]
+ },
+ {
+  "category": "Breads",
+  "items": [
+   {
+    "name": "Plain Prantha",
+    "price": "₹30"
+   },
+   {
+    "name": "Lachha Prantha",
+    "price": "₹50"
+   },
+   {
+    "name": "Stuff Prantha (Gobhi/Aloo/Mix Veg.)",
+    "price": "₹60"
+   },
+   {
+    "name": "Plain Roti",
+    "price": "₹15"
+   },
+   {
+    "name": "Onion Roti",
+    "price": "₹25"
+   },
+   {
+    "name": "Onion Roti with Butter",
+    "price": "₹25"
+   },
+   {
+    "name": "Butter Roti",
+    "price": "₹20"
+   },
+   {
+    "name": "Missi Roti",
+    "price": "₹25"
+   },
+   {
+    "name": "Onion Missi Roti",
+    "price": "₹30"
+   },
+   {
+    "name": "Missi Roti with Butter",
+    "price": "₹40"
+   },
+   {
+    "name": "Plain Naan",
+    "price": "₹40"
+   },
+   {
+    "name": "Butter Naan",
+    "price": "₹50"
+   },
+   {
+    "name": "Cheese Naan",
+    "price": "₹80"
+   },
+   {
+    "name": "Stuff Naan (Mix Veg.)",
+    "price": "₹80"
+   },
+   {
+    "name": "Amritsari Naan",
+    "price": "₹100"
+   },
+   {
+    "name": "Stuff Kulcha (Aloo/Onion/Veg.)",
+    "price": "₹80"
+   },
+   {
+    "name": "Tawa Roti",
+    "price": "₹20"
+   },
+   {
+    "name": "Garlic Naan",
+    "price": "₹80"
+   },
+   {
+    "name": "Cheese/Stuff Naan with Gravy",
+    "price": "₹120"
+   },
+   {
+    "name": "Chicken Keema/Parantha/Naan",
+    "price": "₹150"
+   },
+   {
+    "name": "Egg Prantha/Naan",
+    "price": "₹80"
+   }
+  ]
+ },
+ {
+  "category": "Amul Butter",
+  "items": [
+   {
+    "name": "Quarter",
+    "price": "₹25"
+   },
+   {
+    "name": "Half",
+    "price": "₹50"
+   },
+   {
+    "name": "Full",
+    "price": "₹90"
+   }
+  ]
+ },
+ {
+  "category": "Veg Main Course",
+  "items": [
+   {
+    "name": "Dal Makhani",
+    "price": "₹170"
+   },
+   {
+    "name": "Dal Balti",
+    "price": "₹220"
+   },
+   {
+    "name": "Dal Fry",
+    "price": "₹150"
+   },
+   {
+    "name": "Yellow Dal",
+    "price": "₹150"
+   },
+   {
+    "name": "Mix Vegetable",
+    "price": "₹200"
+   },
+   {
+    "name": "Kaju Curry",
+    "price": "₹300"
+   },
+   {
+    "name": "Dam Aloo",
+    "price": "₹220"
+   },
+   {
+    "name": "Dam Aloo Kashmiri",
+    "price": "₹250"
+   },
+   {
+    "name": "Malai Kofta",
+    "price": "₹250"
+   },
+   {
+    "name": "Mushroom Masala",
+    "price": "₹250"
+   },
+   {
+    "name": "Chana Masala",
+    "price": "₹220"
+   },
+   {
+    "name": "Mushroom Do Payaza",
+    "price": "₹230"
+   },
+   {
+    "name": "Mushroom Kadahi",
+    "price": "₹230"
+   },
+   {
+    "name": "Mutter Mushroom",
+    "price": "₹230"
+   },
+   {
+    "name": "Shahi Paneer",
+    "price": "₹250"
+   },
+   {
+    "name": "Paneer Tikka Butter Masala",
+    "price": "₹280"
+   },
+   {
+    "name": "Paneer Butter Masala",
+    "price": "₹250"
+   },
+   {
+    "name": "Palak Paneer",
+    "price": "₹250"
+   },
+   {
+    "name": "Mutter Paneer",
+    "price": "₹250"
+   },
+   {
+    "name": "Karahi Paneer",
+    "price": "₹280"
+   },
+   {
+    "name": "Paneer Pasanda",
+    "price": "₹250"
+   },
+   {
+    "name": "Cheese Tomato",
+    "price": "₹250"
+   },
+   {
+    "name": "Paneer Do Payaza",
+    "price": "₹270"
+   },
+   {
+    "name": "Paneer Bhurji",
+    "price": "₹220"
+   },
+   {
+    "name": "Palak Kofta",
+    "price": "₹250"
+   },
+   {
+    "name": "Mutter Masala",
+    "price": "₹250"
+   },
+   {
+    "name": "Aloo Mutter",
+    "price": "₹150"
+   },
+   {
+    "name": "Aloo Gobhi",
+    "price": "₹150"
+   },
+   {
+    "name": "Paneer Lababdar",
+    "price": "₹220"
+   },
+   {
+    "name": "Methi Malai Paneer",
+    "price": "₹230"
+   },
+   {
+    "name": "Veg Jal Frezzy",
+    "price": "₹220"
+   },
+   {
+    "name": "Boiled Vegetables",
+    "price": "₹220"
+   },
+   {
+    "name": "Paneer Handi",
+    "price": "₹230"
+   },
+   {
+    "name": "Paneer Dilruba",
+    "price": "₹230"
+   },
+   {
+    "name": "Paneer Shahi Korma",
+    "price": "₹250"
+   },
+   {
+    "name": "Mushroom Kofta",
+    "price": "₹250"
+   },
+   {
+    "name": "Palak Mutter",
+    "price": "₹250"
+   },
+   {
+    "name": "Palak Mushroom",
+    "price": "₹250"
+   },
+   {
+    "name": "Spl. Aloo Jeera",
+    "price": "₹220"
+   },
+   {
+    "name": "Veg Jaipuri",
+    "price": "₹220"
+   },
+   {
+    "name": "Methi Malai Mutter",
+    "price": "₹250"
+   },
+   {
+    "name": "Veg Tari",
+    "price": "₹180"
+   },
+   {
+    "name": "Kaju Mutter",
+    "price": "₹300"
+   },
+   {
+    "name": "Paneer Kalimirch Masala",
+    "price": "₹300"
+   },
+   {
+    "name": "Cream Chicken (Half)",
+    "price": "₹300"
+   },
+   {
+    "name": "Cream Chicken (Full)",
+    "price": "₹450"
+   },
+   {
+    "name": "Chicken Nice (Half)",
+    "price": "₹300"
+   },
+   {
+    "name": "Chicken Nice (Full)",
+    "price": "₹450"
+   },
+   {
+    "name": "Butter Chicken (Half)",
+    "price": "₹300"
+   },
+   {
+    "name": "Butter Chicken (Full)",
+    "price": "₹450"
+   },
+   {
+    "name": "Chicken Ghar Jaisa (Half)",
+    "price": "₹300"
+   },
+   {
+    "name": "Chicken Ghar Jaisa (Full)",
+    "price": "₹450"
+   },
+   {
+    "name": "Chicken Kadhai (Half)",
+    "price": "₹300"
+   },
+   {
+    "name": "Chicken Kadhai (Full)",
+    "price": "₹450"
+   },
+   {
+    "name": "Chicken Tawa (Half)",
+    "price": "₹300"
+   },
+   {
+    "name": "Chicken Tawa (Full)",
+    "price": "₹450"
+   },
+   {
+    "name": "Chicken Masala (Half)",
+    "price": "₹300"
+   },
+   {
+    "name": "Chicken Masala (Full)",
+    "price": "₹450"
+   },
+   {
+    "name": "Chicken Handi (Half)",
+    "price": "₹300"
+   },
+   {
+    "name": "Chicken Handi (Full)",
+    "price": "₹450"
+   },
+   {
+    "name": "Chicken Bharta (Half)",
+    "price": "₹300"
+   },
+   {
+    "name": "Chicken Bharta (Full)",
+    "price": "₹450"
+   },
+   {
+    "name": "Chicken Lemon Chinese (Half)",
+    "price": "₹300"
+   },
+   {
+    "name": "Chicken Lemon Chinese (Full)",
+    "price": "₹450"
+   },
+   {
+    "name": "Chicken Lemon Indian Gravy (Half)",
+    "price": "₹300"
+   },
+   {
+    "name": "Chicken Lemon Indian Gravy (Full)",
+    "price": "₹450"
+   },
+   {
+    "name": "Murg Hydrabadi (Half)",
+    "price": "₹300"
+   },
+   {
+    "name": "Murg Hydrabadi (Full)",
+    "price": "₹450"
+   },
+   {
+    "name": "Murg Muglai (Half)",
+    "price": "₹300"
+   },
+   {
+    "name": "Murg Muglai (Full)",
+    "price": "₹450"
+   },
+   {
+    "name": "Chicken Dopyaza (Half)",
+    "price": "₹300"
+   },
+   {
+    "name": "Chicken Dopyaza (Full)",
+    "price": "₹450"
+   },
+   {
+    "name": "Rara Chicken (Half)",
+    "price": "₹300"
+   },
+   {
+    "name": "Rara Chicken (Full)",
+    "price": "₹500"
+   },
+   {
+    "name": "Chicken Kofta (8 Pcs)",
+    "price": "₹400"
+   },
+   {
+    "name": "Chicken Curry per Plate (with Leg Pcs)",
+    "price": "₹250"
+   },
+   {
+    "name": "Chicken Tari",
+    "price": "₹200"
+   },
+   {
+    "name": "Chicken Kali Mirch (Half)",
+    "price": "₹330"
+   },
+   {
+    "name": "Chicken Kali Mirch (Full)",
+    "price": "₹480"
+   },
+   {
+    "name": "Chicken Tikka Butter Masala (Half)",
+    "price": "₹330"
+   },
+   {
+    "name": "Chicken Tikka Butter Masala (Full)",
+    "price": "₹480"
+   },
+   {
+    "name": "Egg Curry",
+    "price": "₹200"
+   },
+   {
+    "name": "Chicken Keema Curry (Per Plate)",
+    "price": "₹350"
+   },
+   {
+    "name": "Mutton Home Style (Per Plate)",
+    "price": "₹500"
+   },
+   {
+    "name": "Methi Malai Chicken (Half)",
+    "price": "₹350"
+   },
+   {
+    "name": "Methi Malai Chicken (Full)",
+    "price": "₹450"
+   },
+   {
+    "name": "Murg Mussalam",
+    "price": "₹550"
+   },
+   {
+    "name": "Dahi Chicken (Half)",
+    "price": "₹300"
+   },
+   {
+    "name": "Dahi Chicken (Full)",
+    "price": "₹450"
+   },
+   {
+    "name": "Chick Garlic (Half)",
+    "price": "₹300"
+   },
+   {
+    "name": "Chick Garlic (Full)",
+    "price": "₹450"
+   },
+   {
+    "name": "Chick Finger",
+    "price": "₹350"
+   },
+   {
+    "name": "Tandoori Gobhi",
+    "price": "₹280"
+   },
+   {
+    "name": "Bharwa Aloo",
+    "price": "₹250"
+   }
+  ]
+ },
+ {
+  "category": "Dessert",
+  "items": [
+   {
+    "name": "Ice Cream (Vanilla",
+    "price": "Strawberry)"
+   },
+   {
+    "name": "₹80",
+    "price": "Ice Cream (B. Scotch"
+   },
+   {
+    "name": "K. Kishmish",
+    "price": "Mix Fruit)"
+   },
+   {
+    "name": "₹100",
+    "price": "Fruit Cream"
+   },
+   {
+    "name": "₹130",
+    "price": "Tutty Fruity (Celebration Spl.)"
+   },
+   {
+    "name": "₹120",
+    "price": "Gulab Jamun (2PC)"
+   },
+   {
+    "name": "₹60",
+    "price": "Gajrela"
+   }
+  ]
+ },
+ {
+  "category": "Combos",
+  "items": [
+   {
+    "name": "Mini Thali",
+    "price": "₹120"
+   },
+   {
+    "name": "Super Deluxe Thali — 1 Dal + 1 Paneer + 4 Roti + Rice + Raita + Pickle + Salad",
+    "price": "₹180"
+   },
+   {
+    "name": "Nice Spl. Thali — 1 Dal + 1 Paneer + 4 Roti + Rice + Raita + Pickle + Salad + Dessert",
+    "price": "₹280"
+   }
+  ]
+ },
+ {
+  "category": "Additional Items",
+  "items": [
+   {
+    "name": "Veg Burger",
+    "price": "₹50"
+   },
+   {
+    "name": "Cheese Burger",
+    "price": "₹70"
+   },
+   {
+    "name": "Chaat Papdi",
+    "price": "₹70"
+   },
+   {
+    "name": "Red Sause Pasta",
+    "price": "₹170"
+   },
+   {
+    "name": "White Sause Pasta",
+    "price": "₹200"
+   },
+   {
+    "name": "Cheese Pizza",
+    "price": "₹150"
+   },
+   {
+    "name": "Corn Pizza",
+    "price": "₹120"
+   },
+   {
+    "name": "Onion Pizza",
+    "price": "₹100"
+   },
+   {
+    "name": "Masala Dosa",
+    "price": "₹150"
+   },
+   {
+    "name": "Onion Dosa",
+    "price": "₹120"
+   },
+   {
+    "name": "Plain Dosa",
+    "price": "₹100"
+   },
+   {
+    "name": "Dahi Bhala",
+    "price": "₹70"
+   }
+  ]
+ }
+]
