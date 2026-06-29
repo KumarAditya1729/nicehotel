@@ -10,14 +10,21 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as VenueRouteImport } from './routes/venue'
+import { Route as ServicesRouteImport } from './routes/services'
 import { Route as RoomsRouteImport } from './routes/rooms'
 import { Route as MenuRouteImport } from './routes/menu'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
 const VenueRoute = VenueRouteImport.update({
   id: '/venue',
   path: '/venue',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesRoute = ServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RoomsRoute = RoomsRouteImport.update({
@@ -28,6 +35,11 @@ const RoomsRoute = RoomsRouteImport.update({
 const MenuRoute = MenuRouteImport.update({
   id: '/menu',
   path: '/menu',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -44,38 +56,61 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
   '/menu': typeof MenuRoute
   '/rooms': typeof RoomsRoute
+  '/services': typeof ServicesRoute
   '/venue': typeof VenueRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
   '/menu': typeof MenuRoute
   '/rooms': typeof RoomsRoute
+  '/services': typeof ServicesRoute
   '/venue': typeof VenueRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
   '/menu': typeof MenuRoute
   '/rooms': typeof RoomsRoute
+  '/services': typeof ServicesRoute
   '/venue': typeof VenueRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/menu' | '/rooms' | '/venue'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/contact'
+    | '/menu'
+    | '/rooms'
+    | '/services'
+    | '/venue'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/menu' | '/rooms' | '/venue'
-  id: '__root__' | '/' | '/about' | '/menu' | '/rooms' | '/venue'
+  to: '/' | '/about' | '/contact' | '/menu' | '/rooms' | '/services' | '/venue'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/contact'
+    | '/menu'
+    | '/rooms'
+    | '/services'
+    | '/venue'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  ContactRoute: typeof ContactRoute
   MenuRoute: typeof MenuRoute
   RoomsRoute: typeof RoomsRoute
+  ServicesRoute: typeof ServicesRoute
   VenueRoute: typeof VenueRoute
 }
 
@@ -86,6 +121,13 @@ declare module '@tanstack/react-router' {
       path: '/venue'
       fullPath: '/venue'
       preLoaderRoute: typeof VenueRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services': {
+      id: '/services'
+      path: '/services'
+      fullPath: '/services'
+      preLoaderRoute: typeof ServicesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/rooms': {
@@ -100,6 +142,13 @@ declare module '@tanstack/react-router' {
       path: '/menu'
       fullPath: '/menu'
       preLoaderRoute: typeof MenuRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -122,8 +171,10 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  ContactRoute: ContactRoute,
   MenuRoute: MenuRoute,
   RoomsRoute: RoomsRoute,
+  ServicesRoute: ServicesRoute,
   VenueRoute: VenueRoute,
 }
 export const routeTree = rootRouteImport
