@@ -1,10 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 import { Star, Users, Maximize, MapPin, Check } from "lucide-react";
 import { site, venues, whyBookVenue, hallPackages } from "@/data/content";
 import { Reveal } from "@/components/site/Reveal";
 import { Icon } from "@/components/site/Icon";
 import { PageHeader, SectionHeading, CtaBand } from "@/components/site/ui";
-import { useBooking } from "@/components/site/booking";
+import { VenueBookingDialog } from "@/components/site/VenueBookingDialog";
 import { breadcrumbLd } from "@/lib/seo";
 import { getEvents } from "@/lib/public.functions";
 
@@ -38,7 +39,7 @@ export const Route = createFileRoute("/venue")({
 });
 
 function Venue() {
-  const { open } = useBooking();
+  const [bookingVenue, setBookingVenue] = useState<string | null>(null);
   const { dbEvents } = Route.useLoaderData();
   type VenueCard = { slug: string; name: string; sub: string; badge: string; rating: number; capacity: string; size: string; floor: string; image: string; comingSoon: boolean; description: string; amenities: string[] };
   const venueList: VenueCard[] = dbEvents.length
@@ -85,7 +86,7 @@ function Venue() {
                 <div className="mt-auto pt-6">
                   <button
                     disabled={v.comingSoon}
-                    onClick={() => open(v.name)}
+                    onClick={() => setBookingVenue(v.name)}
                     className={`w-full rounded-full px-6 py-3 text-xs font-medium uppercase tracking-[0.2em] transition ${v.comingSoon ? "cursor-not-allowed bg-beige text-muted-foreground" : "bg-charcoal text-ivory hover:bg-gold"}`}
                   >
                     {v.comingSoon ? "Coming Soon" : "Book This Venue"}
@@ -129,6 +130,7 @@ function Venue() {
       </section>
 
       <CtaBand title="Plan Your Perfect Event" sub="Book your stay now and enjoy world-class hospitality at Nice Hotel" image={site.images.meeting} />
+      <VenueBookingDialog venue={bookingVenue} onClose={() => setBookingVenue(null)} />
     </>
   );
 }
