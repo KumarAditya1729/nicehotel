@@ -1,3 +1,4 @@
+import { AppImage } from "@/components/site/AppImage";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { ArrowRight, Star } from "lucide-react";
@@ -208,7 +209,7 @@ function Home() {
                 <TiltCard className="group h-full">
                 <div className="group overflow-hidden rounded-2xl bg-ivory shadow-luxe">
                   <div className="relative h-64 overflow-hidden">
-                    <img src={r.image} alt={r.name} className="h-full w-full object-cover transition duration-700 group-hover:scale-110" loading="lazy" />
+                    <AppImage src={r.image} alt={r.name} className="h-full w-full object-cover transition duration-700 group-hover:scale-110" loading="lazy" />
                     <span className="absolute left-4 top-4 rounded-full bg-gold px-3 py-1 text-xs font-medium uppercase tracking-wider text-ivory">{r.badge}</span>
                     <span className="absolute right-4 top-4 flex items-center gap-1 rounded-full bg-ivory/90 px-3 py-1 text-xs font-medium text-charcoal">
                       <Star className="h-3 w-3 fill-gold text-gold" />{r.rating}
@@ -286,7 +287,7 @@ function Home() {
               <TiltCard className="group h-full">
               <div className="group flex h-full flex-col overflow-hidden rounded-2xl bg-card shadow-card transition hover:shadow-luxe">
                 <div className="h-48 overflow-hidden">
-                  <img src={p.image} alt={p.title} className="h-full w-full object-cover transition duration-700 group-hover:scale-110" loading="lazy" />
+                  <AppImage src={p.image} alt={p.title} className="h-full w-full object-cover transition duration-700 group-hover:scale-110" loading="lazy" />
                 </div>
                 <div className="flex flex-1 flex-col p-7">
                   <span className="text-xs uppercase tracking-[0.2em] text-gold">{p.tag}</span>

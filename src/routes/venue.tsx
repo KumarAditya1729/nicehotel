@@ -1,3 +1,4 @@
+import { AppImage } from "@/components/site/AppImage";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Star, Users, Maximize, MapPin, Check } from "lucide-react";

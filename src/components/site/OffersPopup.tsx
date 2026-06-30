@@ -1,3 +1,4 @@
+import { AppImage } from "@/components/site/AppImage";
 import { useEffect, useState } from "react";
 import { X, Tag } from "lucide-react";
 import { getOffers } from "@/lib/public.functions";
@@ -40,7 +41,7 @@ export function OffersPopup() {
           <X className="h-4 w-4" />
         </button>
         {main.image && (
-          <img src={main.image} alt={main.title} className="h-44 w-full object-cover" />
+          <AppImage src={main.image} alt={main.title} className="h-44 w-full object-cover" />
         )}
         <div className="p-7 text-center">
           <p className="flex items-center justify-center gap-1.5 text-xs uppercase tracking-[0.3em] text-gold"><Tag className="h-3.5 w-3.5" /> Special Offers</p>

@@ -1,3 +1,4 @@
+import { AppImage } from "@/components/site/AppImage";
 import { createFileRoute } from "@tanstack/react-router";
 import { Star, Maximize, Users, Eye, Check } from "lucide-react";
 import { site, rooms, whyChooseRooms } from "@/data/content";

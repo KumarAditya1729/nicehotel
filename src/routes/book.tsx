@@ -1,3 +1,4 @@
+import { AppImage } from "@/components/site/AppImage";
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
@@ -249,7 +250,7 @@ function BookPage() {
                     <button key={r.id} onClick={() => { setRoomId(r.id); setGuests(Math.min(guests, r.capacity)); }}
                       className={`overflow-hidden rounded-2xl border text-left transition ${roomId === r.id ? "border-gold ring-2 ring-gold/30" : "border-border hover:border-gold/50"}`}>
                       <div className="h-40 overflow-hidden bg-beige">
-                        {r.images?.[0] && <img src={r.images[0]} alt={r.name} className="h-full w-full object-cover" loading="lazy" />}
+                        {<AppImage src={r.images} alt={r.name} className="h-full w-full object-cover" loading="lazy" />}
                       </div>
                       <div className="p-4">
                         <div className="flex items-center justify-between">
@@ -372,7 +373,7 @@ function BookPage() {
             {room ? (
               <>
                 <div className="h-36 overflow-hidden rounded-xl bg-beige">
-                  {room.images?.[0] && <img src={room.images[0]} alt={room.name} className="h-full w-full object-cover" />}
+                  {<AppImage src={room.images} alt={room.name} className="h-full w-full object-cover" />}
                 </div>
                 <h3 className="mt-4 font-display text-xl text-charcoal">{room.name}</h3>
                 <p className="flex items-center gap-1 text-xs text-gold"><Star className="h-3.5 w-3.5 fill-gold" /> Premium accommodation</p>
