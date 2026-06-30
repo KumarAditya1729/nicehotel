@@ -5,51 +5,47 @@ import {
   Star, Images, Users, Settings, ScrollText, LogOut, Menu as MenuIcon, X, Hotel, Search,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useAdminAuth, ROLE_LABELS, type AppRole } from "@/lib/admin/auth";
+import { adminLogout } from "@/lib/admin.functions";
 import logo from "@/assets/nice-logo.png.asset.json";
 
-interface NavItem { to: string; label: string; icon: typeof LayoutDashboard; roles?: AppRole[]; }
+interface NavItem { to: string; label: string; icon: typeof LayoutDashboard; roles?: string[]; }
 
 const NAV: { section: string; items: NavItem[] }[] = [
   { section: "Overview", items: [
     { to: "/admin", label: "Dashboard", icon: LayoutDashboard },
   ]},
   { section: "Operations", items: [
-    { to: "/admin/bookings", label: "Bookings", icon: CalendarCheck, roles: ["hotel_manager", "reception", "event_manager"] },
-    { to: "/admin/rooms", label: "Rooms", icon: BedDouble, roles: ["hotel_manager"] },
-    { to: "/admin/enquiries", label: "Enquiries", icon: MessageSquare, roles: ["support", "reception"] },
+    { to: "/admin/bookings", label: "Bookings", icon: CalendarCheck },
+    { to: "/admin/rooms", label: "Rooms", icon: BedDouble },
+    { to: "/admin/enquiries", label: "Enquiries", icon: MessageSquare },
   ]},
   { section: "Restaurant", items: [
-    { to: "/admin/menu", label: "Menu Builder", icon: UtensilsCrossed, roles: ["restaurant_manager"] },
-    { to: "/admin/offers", label: "Offers", icon: Tag, roles: ["restaurant_manager", "content_manager"] },
+    { to: "/admin/menu", label: "Menu Builder", icon: UtensilsCrossed },
+    { to: "/admin/offers", label: "Offers", icon: Tag },
   ]},
   { section: "Content", items: [
-    { to: "/admin/reviews", label: "Reviews", icon: Star, roles: ["content_manager", "support"] },
-    { to: "/admin/gallery", label: "Gallery", icon: Images, roles: ["content_manager"] },
-    { to: "/admin/settings", label: "Site Settings", icon: Settings, roles: ["content_manager"] },
+    { to: "/admin/reviews", label: "Reviews", icon: Star },
+    { to: "/admin/gallery", label: "Gallery", icon: Images },
+    { to: "/admin/settings", label: "Site Settings", icon: Settings },
   ]},
   { section: "Administration", items: [
-    { to: "/admin/staff", label: "Staff & Roles", icon: Users, roles: [] },
-    { to: "/admin/audit", label: "Audit Logs", icon: ScrollText, roles: [] },
+    { to: "/admin/staff", label: "Staff & Roles", icon: Users },
+    { to: "/admin/audit", label: "Audit Logs", icon: ScrollText },
   ]},
 ];
 
 export function AdminShell({ children }: { children: React.ReactNode }) {
-  const { hasRole, roles, user, signOut } = useAdminAuth();
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const [openMobile, setOpenMobile] = useState(false);
 
-  const canSee = (item: NavItem) => {
-    if (roles.includes("super_admin")) return true;
-    if (!item.roles) return true; // visible to all staff
-    if (item.roles.length === 0) return false; // super-admin only
-    return hasRole(...item.roles);
+  const canSee = (_item: NavItem) => true;
+
+  const handleSignOut = async () => {
+    await adminLogout();
+    navigate({ to: "/", replace: true });
+    if (typeof window !== "undefined") window.location.reload();
   };
-
-  const handleSignOut = async () => { await signOut(); navigate({ to: "/auth", replace: true }); };
-
-  const primaryRole = roles.includes("super_admin") ? "super_admin" : roles[0];
 
   return (
     <div className="min-h-screen bg-[#FAFAF8] text-[#1a1a1a]">
@@ -100,8 +96,8 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
               <Hotel className="h-3.5 w-3.5" /> View Site
             </Link>
             <div className="text-right leading-tight">
-              <p className="text-xs font-medium">{user?.email}</p>
-              <p className="text-[10px] text-[#B98A3E]">{primaryRole ? ROLE_LABELS[primaryRole] : "Staff"}</p>
+              <p className="text-xs font-medium">Administrator</p>
+              <p className="text-[10px] text-[#B98A3E]">Full Access</p>
             </div>
             <Button size="icon" variant="ghost" className="h-9 w-9" onClick={handleSignOut} title="Sign out"><LogOut className="h-4 w-4" /></Button>
           </div>

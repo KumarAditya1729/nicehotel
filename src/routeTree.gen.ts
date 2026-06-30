@@ -15,6 +15,7 @@ import { Route as RoomsRouteImport } from './routes/rooms'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as MenuRouteImport } from './routes/menu'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as BookRouteImport } from './routes/book'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
@@ -31,6 +32,8 @@ import { Route as AuthenticatedAdminGalleryRouteImport } from './routes/_authent
 import { Route as AuthenticatedAdminEnquiriesRouteImport } from './routes/_authenticated/admin.enquiries'
 import { Route as AuthenticatedAdminBookingsRouteImport } from './routes/_authenticated/admin.bookings'
 import { Route as AuthenticatedAdminAuditRouteImport } from './routes/_authenticated/admin.audit'
+import { Route as ApiPublicRazorpayVerifyRouteImport } from './routes/api/public/razorpay.verify'
+import { Route as ApiPublicRazorpayOrderRouteImport } from './routes/api/public/razorpay.order'
 
 const VenueRoute = VenueRouteImport.update({
   id: '/venue',
@@ -60,6 +63,11 @@ const MenuRoute = MenuRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookRoute = BookRouteImport.update({
+  id: '/book',
+  path: '/book',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -147,11 +155,22 @@ const AuthenticatedAdminAuditRoute = AuthenticatedAdminAuditRouteImport.update({
   path: '/audit',
   getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
+const ApiPublicRazorpayVerifyRoute = ApiPublicRazorpayVerifyRouteImport.update({
+  id: '/api/public/razorpay/verify',
+  path: '/api/public/razorpay/verify',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicRazorpayOrderRoute = ApiPublicRazorpayOrderRouteImport.update({
+  id: '/api/public/razorpay/order',
+  path: '/api/public/razorpay/order',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
+  '/book': typeof BookRoute
   '/contact': typeof ContactRoute
   '/menu': typeof MenuRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -170,11 +189,14 @@ export interface FileRoutesByFullPath {
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/admin/staff': typeof AuthenticatedAdminStaffRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
+  '/api/public/razorpay/order': typeof ApiPublicRazorpayOrderRoute
+  '/api/public/razorpay/verify': typeof ApiPublicRazorpayVerifyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
+  '/book': typeof BookRoute
   '/contact': typeof ContactRoute
   '/menu': typeof MenuRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -192,6 +214,8 @@ export interface FileRoutesByTo {
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/admin/staff': typeof AuthenticatedAdminStaffRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
+  '/api/public/razorpay/order': typeof ApiPublicRazorpayOrderRoute
+  '/api/public/razorpay/verify': typeof ApiPublicRazorpayVerifyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -199,6 +223,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
+  '/book': typeof BookRoute
   '/contact': typeof ContactRoute
   '/menu': typeof MenuRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -217,6 +242,8 @@ export interface FileRoutesById {
   '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/_authenticated/admin/staff': typeof AuthenticatedAdminStaffRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
+  '/api/public/razorpay/order': typeof ApiPublicRazorpayOrderRoute
+  '/api/public/razorpay/verify': typeof ApiPublicRazorpayVerifyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -224,6 +251,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/auth'
+    | '/book'
     | '/contact'
     | '/menu'
     | '/reset-password'
@@ -242,11 +270,14 @@ export interface FileRouteTypes {
     | '/admin/settings'
     | '/admin/staff'
     | '/admin/'
+    | '/api/public/razorpay/order'
+    | '/api/public/razorpay/verify'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
     | '/auth'
+    | '/book'
     | '/contact'
     | '/menu'
     | '/reset-password'
@@ -264,12 +295,15 @@ export interface FileRouteTypes {
     | '/admin/settings'
     | '/admin/staff'
     | '/admin'
+    | '/api/public/razorpay/order'
+    | '/api/public/razorpay/verify'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/about'
     | '/auth'
+    | '/book'
     | '/contact'
     | '/menu'
     | '/reset-password'
@@ -288,6 +322,8 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/settings'
     | '/_authenticated/admin/staff'
     | '/_authenticated/admin/'
+    | '/api/public/razorpay/order'
+    | '/api/public/razorpay/verify'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -295,12 +331,15 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   AuthRoute: typeof AuthRoute
+  BookRoute: typeof BookRoute
   ContactRoute: typeof ContactRoute
   MenuRoute: typeof MenuRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   RoomsRoute: typeof RoomsRoute
   ServicesRoute: typeof ServicesRoute
   VenueRoute: typeof VenueRoute
+  ApiPublicRazorpayOrderRoute: typeof ApiPublicRazorpayOrderRoute
+  ApiPublicRazorpayVerifyRoute: typeof ApiPublicRazorpayVerifyRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -345,6 +384,13 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/book': {
+      id: '/book'
+      path: '/book'
+      fullPath: '/book'
+      preLoaderRoute: typeof BookRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -459,6 +505,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminAuditRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/api/public/razorpay/verify': {
+      id: '/api/public/razorpay/verify'
+      path: '/api/public/razorpay/verify'
+      fullPath: '/api/public/razorpay/verify'
+      preLoaderRoute: typeof ApiPublicRazorpayVerifyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/razorpay/order': {
+      id: '/api/public/razorpay/order'
+      path: '/api/public/razorpay/order'
+      fullPath: '/api/public/razorpay/order'
+      preLoaderRoute: typeof ApiPublicRazorpayOrderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -509,12 +569,15 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   AuthRoute: AuthRoute,
+  BookRoute: BookRoute,
   ContactRoute: ContactRoute,
   MenuRoute: MenuRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   RoomsRoute: RoomsRoute,
   ServicesRoute: ServicesRoute,
   VenueRoute: VenueRoute,
+  ApiPublicRazorpayOrderRoute: ApiPublicRazorpayOrderRoute,
+  ApiPublicRazorpayVerifyRoute: ApiPublicRazorpayVerifyRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

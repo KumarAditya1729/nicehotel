@@ -2,14 +2,12 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageTitle } from "@/components/admin/AdminShell";
 import { ResourceManager, StatusBadge, type Field, type Column } from "@/components/admin/ResourceManager";
 import { useRows } from "@/lib/admin/data";
-import { useAdminAuth } from "@/lib/admin/auth";
 
 export const Route = createFileRoute("/_authenticated/admin/staff")({ component: Staff });
 
 const ROLES = ["super_admin", "hotel_manager", "restaurant_manager", "event_manager", "reception", "content_manager", "accountant", "support"];
 
 function Staff() {
-  const { isSuperAdmin } = useAdminAuth();
   const { data: profiles = [] } = useRows<any>("profiles");
 
   const fields: Field[] = [
@@ -24,8 +22,7 @@ function Staff() {
   return (
     <div>
       <PageTitle title="Staff & Roles" subtitle="Assign role-based access to team members" />
-      {!isSuperAdmin && <p className="mb-4 rounded-xl bg-[#F9A825]/10 px-4 py-3 text-sm text-[#a37800]">Only Super Admins can modify roles.</p>}
-      <ResourceManager table="user_roles" fields={fields} columns={columns} canEdit={isSuperAdmin} searchKeys={["role"]} />
+      <ResourceManager table="user_roles" fields={fields} columns={columns} searchKeys={["role"]} />
     </div>
   );
 }

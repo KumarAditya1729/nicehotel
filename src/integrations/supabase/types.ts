@@ -58,14 +58,18 @@ export type Database = {
           guest_phone: string | null
           guests: number | null
           id: string
+          nights: number | null
           notes: string | null
           payment_status: string
+          razorpay_order_id: string | null
+          razorpay_payment_id: string | null
           room_id: string | null
           room_type: string | null
           source: string
           special_requests: string | null
           status: string
           updated_at: string
+          user_id: string | null
         }
         Insert: {
           amount?: number | null
@@ -77,14 +81,18 @@ export type Database = {
           guest_phone?: string | null
           guests?: number | null
           id?: string
+          nights?: number | null
           notes?: string | null
           payment_status?: string
+          razorpay_order_id?: string | null
+          razorpay_payment_id?: string | null
           room_id?: string | null
           room_type?: string | null
           source?: string
           special_requests?: string | null
           status?: string
           updated_at?: string
+          user_id?: string | null
         }
         Update: {
           amount?: number | null
@@ -96,14 +104,18 @@ export type Database = {
           guest_phone?: string | null
           guests?: number | null
           id?: string
+          nights?: number | null
           notes?: string | null
           payment_status?: string
+          razorpay_order_id?: string | null
+          razorpay_payment_id?: string | null
           room_id?: string | null
           room_type?: string | null
           source?: string
           special_requests?: string | null
           status?: string
           updated_at?: string
+          user_id?: string | null
         }
         Relationships: [
           {
