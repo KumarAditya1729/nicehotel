@@ -17,6 +17,7 @@ interface AuthState {
   roles: AppRole[];
   loading: boolean;
   isStaff: boolean;
+  isSuperAdmin: boolean;
   hasRole: (...r: AppRole[]) => boolean;
   refresh: () => Promise<void>;
   signOut: () => Promise<void>;
@@ -57,6 +58,7 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
     roles,
     loading,
     isStaff: roles.length > 0,
+    isSuperAdmin: roles.includes("super_admin"),
     hasRole: (...r) => r.some((x) => roles.includes(x)) || roles.includes("super_admin"),
     refresh,
     signOut: async () => {
