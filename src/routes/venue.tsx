@@ -44,7 +44,11 @@ function Venue() {
   const { dbEvents } = Route.useLoaderData();
   type VenueCard = { slug: string; name: string; sub: string; badge: string; rating: number; capacity: string; size: string; floor: string; image: string; comingSoon: boolean; description: string; amenities: string[] };
   const venueList: VenueCard[] = dbEvents.length
-    ? dbEvents.map((v: any) => ({
+    ? dbEvents.map((v: any) => {
+        const match = venues.find(
+          (s) => s.name.toLowerCase() === String(v.name ?? "").toLowerCase(),
+        );
+        return {
         slug: v.id as string,
         name: v.name as string,
         sub: (v.subtitle as string) ?? "",
@@ -53,11 +57,12 @@ function Venue() {
         capacity: (v.capacity as string) ?? "",
         size: (v.size as string) ?? "",
         floor: (v.floor as string) ?? "",
-        image: (v.image as string) || site.images.hall,
+        image: (v.image as string) || match?.image || site.images.hall,
         comingSoon: Boolean(v.coming_soon),
         description: (v.description as string) ?? "",
         amenities: Array.isArray(v.amenities) ? (v.amenities as string[]) : [],
-      }))
+        };
+      })
     : venues;
   return (
     <>
