@@ -27,6 +27,7 @@ async function assertUnlocked() {
 const ALLOWED = new Set([
   "bookings", "rooms", "menu_categories", "menu_items", "offers",
   "enquiries", "reviews", "gallery", "profiles", "user_roles", "audit_logs", "site_settings",
+  "services", "events",
 ]);
 function table(t: string) {
   if (!ALLOWED.has(t)) throw new Error("Unknown table");
