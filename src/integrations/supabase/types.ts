@@ -169,6 +169,63 @@ export type Database = {
         }
         Relationships: []
       }
+      events: {
+        Row: {
+          amenities: string[]
+          badge: string | null
+          capacity: string | null
+          coming_soon: boolean
+          created_at: string
+          description: string | null
+          floor: string | null
+          id: string
+          image: string | null
+          is_active: boolean
+          name: string
+          price: string | null
+          size: string | null
+          sort_order: number
+          subtitle: string | null
+          updated_at: string
+        }
+        Insert: {
+          amenities?: string[]
+          badge?: string | null
+          capacity?: string | null
+          coming_soon?: boolean
+          created_at?: string
+          description?: string | null
+          floor?: string | null
+          id?: string
+          image?: string | null
+          is_active?: boolean
+          name: string
+          price?: string | null
+          size?: string | null
+          sort_order?: number
+          subtitle?: string | null
+          updated_at?: string
+        }
+        Update: {
+          amenities?: string[]
+          badge?: string | null
+          capacity?: string | null
+          coming_soon?: boolean
+          created_at?: string
+          description?: string | null
+          floor?: string | null
+          id?: string
+          image?: string | null
+          is_active?: boolean
+          name?: string
+          price?: string | null
+          size?: string | null
+          sort_order?: number
+          subtitle?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       gallery: {
         Row: {
           album: string | null
@@ -447,6 +504,45 @@ export type Database = {
           status?: string
           updated_at?: string
           weekend_price?: number | null
+        }
+        Relationships: []
+      }
+      services: {
+        Row: {
+          created_at: string
+          description: string | null
+          group_name: string
+          icon: string
+          id: string
+          is_active: boolean
+          sort_order: number
+          tags: string[]
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          group_name?: string
+          icon?: string
+          id?: string
+          is_active?: boolean
+          sort_order?: number
+          tags?: string[]
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          group_name?: string
+          icon?: string
+          id?: string
+          is_active?: boolean
+          sort_order?: number
+          tags?: string[]
+          title?: string
+          updated_at?: string
         }
         Relationships: []
       }
