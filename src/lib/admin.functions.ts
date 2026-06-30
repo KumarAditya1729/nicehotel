@@ -26,7 +26,7 @@ async function assertUnlocked() {
 
 const ALLOWED = new Set([
   "bookings", "rooms", "menu_categories", "menu_items", "offers",
-  "enquiries", "site_settings", "services", "events", "email_logs",
+  "enquiries", "site_settings", "services", "events", "email_logs", "notifications",
 ]);
 function table(t: string) {
   if (!ALLOWED.has(t)) throw new Error("Unknown table");
@@ -172,6 +172,30 @@ export const adminResendEmail = createServerFn({ method: "POST" })
   });
 
 // ----- Multi-room booking management -----
+
+// ----- Notifications -----
+
+export const adminNotificationsMarkRead = createServerFn({ method: "POST" })
+  .inputValidator((d: { id?: string; all?: boolean }) => d)
+  .handler(async ({ data }) => {
+    await assertUnlocked();
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    let q = (supabaseAdmin as any).from("notifications").update({ read: true });
+    q = data.all ? q.eq("read", false) : q.eq("id", data.id);
+    const { error } = await q;
+    if (error) throw new Error(error.message);
+    return { ok: true };
+  });
+
+export const adminNotificationsClear = createServerFn({ method: "POST" })
+  .handler(async () => {
+    await assertUnlocked();
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { error } = await (supabaseAdmin as any)
+      .from("notifications").delete().neq("id", "00000000-0000-0000-0000-000000000000");
+    if (error) throw new Error(error.message);
+    return { ok: true };
+  });
 
 export const adminBookingRooms = createServerFn({ method: "POST" })
   .inputValidator((d: { bookingId: string }) => d)

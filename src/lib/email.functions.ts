@@ -43,6 +43,13 @@ export const sendBookingEmail = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const { sendEmails, adminEmail } = await import("./email.server");
     const t = await import("./email-templates");
+    const { notify } = await import("./notifications.server");
+    await notify({
+      type: "booking",
+      title: `New booking request — ${data.name}`,
+      body: `${data.roomType ?? "Room"} · ${data.checkIn ?? "?"} → ${data.checkOut ?? "?"} · ${data.guests ?? "?"} guest(s)`,
+      link: "/admin/bookings",
+    });
     await sendEmails([
       { to: data.email, subject: "Your reservation request — Nice Hotel & Restaurant", html: t.bookingGuestEmail(data), type: "booking_confirmation", payload: { type: "booking_confirmation", to: data.email, data } },
       { to: adminEmail(), subject: `New booking: ${data.name}`, html: t.bookingAdminEmail(data), reply: data.email, type: "admin_alert", payload: { type: "admin_alert", to: adminEmail(), data } },
@@ -67,6 +74,15 @@ export const sendContactEmail = createServerFn({ method: "POST" })
     } catch (e) {
       console.error("Enquiry save error", e);
     }
+    try {
+      const { notify } = await import("./notifications.server");
+      await notify({
+        type: "enquiry",
+        title: `New contact message — ${data.name}`,
+        body: data.message.slice(0, 140),
+        link: "/admin/enquiries",
+      });
+    } catch (e) { console.error("notify error", e); }
     // 2) Send notification emails (best-effort — failure must not break the flow).
     try {
       const { sendEmails, adminEmail } = await import("./email.server");
@@ -86,6 +102,13 @@ export const sendPaymentReceiptEmail = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const { sendEmails, adminEmail } = await import("./email.server");
     const t = await import("./email-templates");
+    const { notify } = await import("./notifications.server");
+    await notify({
+      type: "payment",
+      title: `Payment received — ${data.name}`,
+      body: `₹${data.amount}${data.reference ? ` · ${data.reference}` : ""}`,
+      link: "/admin/bookings",
+    });
     await sendEmails([
       { to: data.email, subject: "Payment receipt — Nice Hotel & Restaurant", html: t.paymentReceiptEmail(data), type: "payment", payload: { type: "payment", to: data.email, data } },
       { to: adminEmail(), subject: `Payment received: ${data.name}`, html: t.paymentAdminEmail(data), reply: data.email, type: "admin_alert" },
@@ -118,6 +141,15 @@ export const sendVenueEnquiry = createServerFn({ method: "POST" })
     } catch (e) {
       console.error("Venue enquiry save error", e);
     }
+    try {
+      const { notify } = await import("./notifications.server");
+      await notify({
+        type: "venue",
+        title: `New venue booking — ${data.name}`,
+        body: `${data.eventType} · ${data.eventDate} · ${data.guests} guests${data.venue ? ` · ${data.venue}` : ""}`,
+        link: "/admin/enquiries",
+      });
+    } catch (e) { console.error("notify error", e); }
 
     // 2) Send notification emails (best-effort — failure must not break the flow).
     try {

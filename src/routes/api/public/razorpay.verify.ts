@@ -136,6 +136,15 @@ export const Route = createFileRoute("/api/public/razorpay/verify")({
 
         // Send confirmation emails (best-effort)
         try {
+          const { notify } = await import("@/lib/notifications.server");
+          await notify({
+            type: "booking",
+            title: `New paid booking — ${d.guestName}`,
+            body: `${roomSummary} · ${d.checkIn} → ${d.checkOut} · ₹${quote.grandTotal.toLocaleString("en-IN")}`,
+            link: "/admin/bookings",
+          });
+        } catch (e) { console.error("notify error", e); }
+        try {
           const { sendEmails, adminEmail } = await import("@/lib/email.server");
           const t = await import("@/lib/email-templates");
           const roomsBreakdown = quote.lines

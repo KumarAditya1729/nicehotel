@@ -6,6 +6,7 @@ import hallImg from "@/assets/hotel/hall.png";
 import dining2Img from "@/assets/hotel/dining2.png";
 import meeting1Img from "@/assets/hotel/meeting1.png";
 import meetingRoomImg from "@/assets/hotel/meeting-room.jpg";
+import gardenTerraceImg from "@/assets/hotel/garden-terrace.jpg";
 
 export const site = {
   name: "Nice Hotel And Restaurant",
@@ -30,6 +31,7 @@ export const site = {
     dining2: dining2Img,
     meeting1: meeting1Img,
     meetingRoom: meetingRoomImg,
+    gardenTerrace: gardenTerraceImg,
   },
 };
 
@@ -126,15 +128,15 @@ export const venues = [
   {
     slug: "garden-terrace",
     name: "Garden Terrace",
-    sub: "Coming Soon",
-    badge: "Coming Soon",
+    sub: "Open-Air Celebrations",
+    badge: "Outdoor Venue",
     rating: 4.8,
-    capacity: "Coming Soon",
-    size: "—",
+    capacity: "80 Guests",
+    size: "350 sqm",
     floor: "Ground Floor",
-    image: dining2Img,
-    comingSoon: true,
-    description: "Beautiful outdoor venue with scenic views — Opening Soon!",
+    image: site.images.gardenTerrace,
+    comingSoon: false,
+    description: "Beautiful open-air garden terrace with scenic views, perfect for evening celebrations and gatherings.",
     amenities: ["Outdoor Setting", "Scenic Views", "Garden Lighting", "Open Air", "Floral Decor", "Catering"],
   },
 ];

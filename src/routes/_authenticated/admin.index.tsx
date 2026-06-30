@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo } from "react";
-import { CalendarCheck, LogIn, LogOut, Clock, BedDouble, DoorOpen, IndianRupee, UtensilsCrossed, MessageSquare } from "lucide-react";
+import { CalendarCheck, LogIn, LogOut, Clock, BedDouble, DoorOpen, IndianRupee, UtensilsCrossed, MessageSquare, Activity } from "lucide-react";
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, CartesianGrid, BarChart, Bar } from "recharts";
 import { PageTitle } from "@/components/admin/AdminShell";
 import { StatusBadge } from "@/components/admin/ResourceManager";
@@ -27,6 +27,7 @@ function Dashboard() {
   const { data: rooms = [] } = useRows<any>("rooms");
   const { data: enquiries = [] } = useRows<any>("enquiries");
   const { data: menuItems = [] } = useRows<any>("menu_items");
+  const { data: activity = [] } = useRows<any>("notifications", { orderBy: "created_at", ascending: false });
   const today = todayStr();
 
   const stats = useMemo(() => {
@@ -132,6 +133,22 @@ function Dashboard() {
         </div>
       </div>
       <p className="mt-6 text-center text-xs text-muted-foreground"><UtensilsCrossed className="mr-1 inline h-3 w-3" /> Restaurant, events & analytics modules available in the sidebar.</p>
+
+      <div className="mt-6 rounded-2xl border border-black/5 bg-white p-5 shadow-sm">
+        <h3 className="mb-4 flex items-center gap-2 font-display text-xl text-[#161616]"><Activity className="h-5 w-5 text-[#B98A3E]" /> Live Activity</h3>
+        {activity.length === 0 && <p className="py-8 text-center text-sm text-muted-foreground">No activity yet. New bookings, enquiries and payments appear here instantly.</p>}
+        <div className="space-y-2">
+          {activity.slice(0, 12).map((a) => (
+            <div key={a.id} className={`flex items-start justify-between gap-3 rounded-xl px-4 py-3 ${a.read ? "bg-[#FAFAF8]" : "bg-[#B98A3E]/5"}`}>
+              <div className="min-w-0">
+                <p className="text-sm font-medium text-[#161616]">{a.title}</p>
+                {a.body && <p className="mt-0.5 line-clamp-1 text-xs text-muted-foreground">{a.body}</p>}
+              </div>
+              <span className="shrink-0 text-[10px] uppercase tracking-wide text-muted-foreground">{new Date(a.created_at).toLocaleString()}</span>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

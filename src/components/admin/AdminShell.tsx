@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { adminLogout } from "@/lib/admin.functions";
+import { NotificationBell } from "@/components/admin/NotificationBell";
 import logo from "@/assets/nice-logo.png";
 
 interface NavItem { to: string; label: string; icon: typeof LayoutDashboard; roles?: string[]; }
@@ -93,6 +94,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
             <Link to="/" className="hidden items-center gap-1.5 rounded-full border border-black/10 px-3 py-1.5 text-xs text-muted-foreground hover:border-[#B98A3E] sm:flex">
               <Hotel className="h-3.5 w-3.5" /> View Site
             </Link>
+            <NotificationBell />
             <div className="text-right leading-tight">
               <p className="text-xs font-medium">Administrator</p>
               <p className="text-[10px] text-[#B98A3E]">Full Access</p>
