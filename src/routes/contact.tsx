@@ -2,6 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { MapPin, Phone, Mail, Clock, Instagram, Send } from "lucide-react";
 import { toast } from "sonner";
+import { useServerFn } from "@tanstack/react-start";
+import { sendContactEmail } from "@/lib/email.functions";
 import { site } from "@/data/content";
 import { Reveal } from "@/components/site/Reveal";
 import { PageHeader } from "@/components/site/ui";
@@ -30,6 +32,32 @@ const details = (s = site) => [
 
 function Contact() {
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const submitContact = useServerFn(sendContactEmail);
+
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const form = e.target as HTMLFormElement;
+    const fd = new FormData(form);
+    setSending(true);
+    try {
+      await submitContact({
+        data: {
+          name: String(fd.get("name") || ""),
+          email: String(fd.get("email") || ""),
+          phone: String(fd.get("phone") || ""),
+          message: String(fd.get("message") || ""),
+        },
+      });
+      setSent(true);
+      form.reset();
+      toast.success("Thank you! A confirmation email is on its way.");
+    } catch {
+      toast.error("Could not send your message", { description: `Please call us at ${site.phone}.` });
+    } finally {
+      setSending(false);
+    }
+  };
   return (
     <>
       <PageHeader eyebrow="Get In Touch" title="Contact Us" sub="We'd love to hear from you — reach out anytime" image={site.images.hall} />
@@ -58,25 +86,25 @@ function Contact() {
 
         <Reveal delay={0.15}>
           <form
-            onSubmit={(e) => { e.preventDefault(); setSent(true); toast.success("Thank you! We'll get back to you shortly."); (e.target as HTMLFormElement).reset(); }}
+            onSubmit={onSubmit}
             className="rounded-2xl border border-border bg-card p-8 shadow-card">
             <h2 className="font-display text-3xl text-charcoal">Send a Message</h2>
             <div className="gold-rule mt-4" />
             <div className="mt-6 space-y-4">
-              {[["Name", "text", "name"], ["Email", "email", "email"], ["Phone", "tel", "tel"]].map(([l, t, ac]) => (
+              {[["Name", "text", "name", "name"], ["Email", "email", "email", "email"], ["Phone", "tel", "tel", "phone"]].map(([l, t, ac, nm]) => (
                 <div key={l}>
                   <label className="text-xs uppercase tracking-wider text-muted-foreground">{l}</label>
-                  <input required type={t as string} autoComplete={ac as string}
+                  <input required name={nm as string} type={t as string} autoComplete={ac as string}
                     className="mt-1 w-full rounded-xl border border-border bg-white/70 px-4 py-3 text-sm outline-none focus:border-gold" />
                 </div>
               ))}
               <div>
                 <label className="text-xs uppercase tracking-wider text-muted-foreground">Message</label>
-                <textarea required rows={4}
+                <textarea required name="message" rows={4}
                   className="mt-1 w-full rounded-xl border border-border bg-white/70 px-4 py-3 text-sm outline-none focus:border-gold" />
               </div>
-              <button type="submit" className="flex w-full items-center justify-center gap-2 rounded-full bg-charcoal py-3.5 text-xs font-medium uppercase tracking-[0.2em] text-ivory transition hover:bg-gold">
-                <Send className="h-4 w-4" />{sent ? "Message Sent" : "Send Message"}
+              <button type="submit" disabled={sending} className="flex w-full items-center justify-center gap-2 rounded-full bg-charcoal py-3.5 text-xs font-medium uppercase tracking-[0.2em] text-ivory transition hover:bg-gold disabled:opacity-60">
+                <Send className="h-4 w-4" />{sending ? "Sending…" : sent ? "Message Sent" : "Send Message"}
               </button>
             </div>
           </form>
