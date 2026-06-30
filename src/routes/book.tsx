@@ -128,6 +128,15 @@ function BookPage() {
 
   const nights = nightsBetween(checkIn, checkOut);
 
+  // Length-of-stay selector: sets check-out based on check-in + number of nights.
+  const setStayNights = (days: number) => {
+    if (!Number.isFinite(days) || days < 1) return;
+    const base = checkIn || todayStr();
+    if (!checkIn) setCheckIn(base);
+    const co = new Date(new Date(base).getTime() + days * 86400000).toISOString().slice(0, 10);
+    setCheckOut(co);
+  };
+
   // Live availability when dates chosen
   useEffect(() => {
     if (nights <= 0) { setAvailability([]); return; }
@@ -310,7 +319,27 @@ function BookPage() {
                     <input type="date" min={checkIn || todayStr()} value={checkOut} onChange={(e) => setCheckOut(e.target.value)} className={fieldCls} />
                   </label>
                 </div>
-                {nights > 0 && <p className="mt-4 text-sm text-charcoal">{nights} night{nights > 1 ? "s" : ""} selected</p>}
+                <label className="mt-4 block text-xs text-muted-foreground">
+                  <span className="mb-1.5 flex items-center gap-1.5"><CalendarDays className="h-4 w-4 text-gold" /> Number of nights you want to stay</span>
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="number" min={1} max={60}
+                      value={nights > 0 ? nights : ""}
+                      placeholder="e.g. 2"
+                      onChange={(e) => setStayNights(Number(e.target.value))}
+                      className={`${fieldCls} max-w-[160px]`}
+                    />
+                    <div className="flex flex-wrap gap-1.5">
+                      {[1, 2, 3, 5, 7].map((d) => (
+                        <button key={d} type="button" onClick={() => setStayNights(d)}
+                          className={`rounded-full border px-3 py-1.5 text-[11px] font-medium transition ${nights === d ? "border-gold bg-gold text-ivory" : "border-border text-muted-foreground hover:border-gold hover:text-gold"}`}>
+                          {d} night{d > 1 ? "s" : ""}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </label>
+                {nights > 0 && <p className="mt-4 text-sm text-charcoal">{nights} night{nights > 1 ? "s" : ""} selected · {nights + 1} day{nights + 1 > 1 ? "s" : ""}</p>}
               </div>
             )}
 
