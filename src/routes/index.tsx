@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { ArrowRight, Star } from "lucide-react";
 import {
-  site, heroStats, rooms, venues, offers, amenities,
+  site, rooms, realComfortStats, hospitality, breakfastFeature, curatedPrivileges,
 } from "@/data/content";
 import { Reveal } from "@/components/site/Reveal";
 import { Icon } from "@/components/site/Icon";
@@ -82,41 +82,29 @@ function Home() {
 
       <BookingWidget />
 
-      {/* WELCOME TILES */}
+      {/* REAL COMFORT — EDITORIAL SPLIT WITH STATS */}
       <section className="container-luxe py-24">
-        <SectionHeading center eyebrow="Welcome" title="Welcome to Nice Hotel And Restaurant"
-          sub="Where luxury meets comfort — Experience world-class hospitality" />
-        <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {heroStats.map((s, i) => (
-            <Reveal key={s.title} delay={i * 0.1}>
-              <div className="group h-full rounded-2xl border border-border bg-card p-8 text-center shadow-card transition-all duration-500 hover:-translate-y-2 hover:shadow-luxe">
-                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-beige text-gold transition group-hover:bg-gold group-hover:text-ivory">
-                  <Icon name={s.icon} className="h-7 w-7" />
-                </div>
-                <h3 className="mt-5 font-display text-2xl text-charcoal">{s.title}</h3>
-                <p className="mt-2 text-sm text-muted-foreground">{s.text}</p>
-                <span className="mt-4 inline-block rounded-full bg-beige px-4 py-1 text-xs font-medium tracking-wider text-gold">{s.tag}</span>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      {/* EDITORIAL SPLIT */}
-      <section className="bg-beige py-24">
-        <div className="container-luxe grid grid-cols-1 items-center gap-14 lg:grid-cols-2">
+        <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-2">
           <Reveal>
-            <p className="eyebrow">Our Story</p>
+            <p className="eyebrow">Welcome</p>
             <h2 className="mt-3 font-display text-4xl leading-tight text-charcoal md:text-5xl">
-              Experience Luxury &amp; Comfort in the Heart of Mansa
+              Real Comfort,<br />Warm Service
             </h2>
             <div className="gold-rule mt-5" />
             <p className="mt-6 text-muted-foreground">
-              Welcome to Nice Hotel &amp; Restaurant, where elegance meets comfort. Our establishment features 9 beautifully designed luxury rooms, a fine dining restaurant, and a magnificent party hall for weddings, conferences, and special events.
+              Nice Hotel &amp; Restaurant is where elegance meets comfort. With beautifully designed luxury rooms, a fine dining restaurant and an elegant party hall, we bring world-class hospitality to the heart of Mansa.
             </p>
             <p className="mt-4 text-muted-foreground">
-              Located in the centre of the city, we offer world-class hospitality with personalized service to make your stay truly memorable.
+              Located in the centre of the city, we offer personalized service to make your stay truly memorable.
             </p>
+            <div className="mt-9 grid grid-cols-3 gap-6 border-t border-border pt-8">
+              {realComfortStats.map((s) => (
+                <div key={s.label}>
+                  <p className="font-display text-3xl text-gold md:text-4xl">{s.value}</p>
+                  <p className="mt-1 text-xs uppercase tracking-wider text-muted-foreground">{s.label}</p>
+                </div>
+              ))}
+            </div>
             <div className="mt-8"><Link to="/about"><LuxeButton variant="outline"><span className="text-charcoal">Discover More</span></LuxeButton></Link></div>
           </Reveal>
           <Reveal delay={0.2} className="relative">
@@ -130,29 +118,39 @@ function Home() {
         </div>
       </section>
 
-      {/* WHY CHOOSE / AMENITIES */}
-      <section className="container-luxe py-24">
-        <SectionHeading center eyebrow="Why Choose Us" title="Premium Amenities & Services"
-          sub="Everything you need for a perfect, effortless stay" />
-        <div className="mt-14 grid grid-cols-2 gap-4 md:grid-cols-3">
-          {amenities.map((a, i) => (
-            <Reveal key={a.title} delay={i * 0.06}>
-              <div className="flex h-full items-start gap-4 rounded-2xl border border-border bg-card p-6 transition hover:border-gold/50 hover:shadow-card">
-                <span className="text-gold"><Icon name={a.icon} className="h-6 w-6" /></span>
-                <div>
-                  <h3 className="font-display text-xl text-charcoal">{a.title}</h3>
-                  <p className="mt-1 text-sm text-muted-foreground">{a.text}</p>
+      {/* THE MARK OF TRUE HOSPITALITY */}
+      <section className="bg-beige py-24">
+        <div className="container-luxe">
+          <SectionHeading center eyebrow="Why Choose Us" title="The Mark of True Hospitality"
+            sub="Everything you need for a perfect, effortless stay" />
+          <div className="mt-14 grid grid-cols-1 gap-x-10 gap-y-10 sm:grid-cols-2 md:grid-cols-3">
+            {hospitality.map((a, i) => (
+              <Reveal key={a.title} delay={i * 0.05}>
+                <div className="flex h-full items-start gap-4">
+                  <span className="text-gold"><Icon name={a.icon} className="h-6 w-6" /></span>
+                  <div>
+                    <h3 className="font-display text-xl text-charcoal">{a.title}</h3>
+                    <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{a.text}</p>
+                  </div>
                 </div>
+              </Reveal>
+            ))}
+          </div>
+          <Reveal delay={0.1} className="mt-12 border-t border-border/60 pt-10">
+            <div className="flex items-start gap-4">
+              <span className="text-gold"><Icon name={breakfastFeature.icon} className="h-6 w-6" /></span>
+              <div>
+                <h3 className="font-display text-xl text-charcoal">{breakfastFeature.title}</h3>
+                <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{breakfastFeature.text}</p>
               </div>
-            </Reveal>
-          ))}
+            </div>
+          </Reveal>
         </div>
       </section>
 
       {/* ROOMS TEASER */}
-      <section className="bg-charcoal py-24">
-        <div className="container-luxe">
-          <SectionHeading center light eyebrow="Accommodations" title="Luxury Rooms & Suites"
+      <section className="container-luxe py-24">
+          <SectionHeading center eyebrow="Stay" title="Rooms & Suites"
             sub="Choose from our executive and deluxe accommodations" />
           <div className="mt-14 grid grid-cols-1 gap-8 md:grid-cols-2">
             {rooms.map((r, i) => (
@@ -178,10 +176,9 @@ function Home() {
             ))}
           </div>
           <div className="mt-12 text-center"><Link to="/rooms"><LuxeButton>View All Rooms</LuxeButton></Link></div>
-        </div>
       </section>
 
-      {/* VENUE TEASER */}
+      {/* SPACES FOR EVERY GATHERING */}
       <section className="container-luxe py-24">
         <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-2">
           <Reveal className="order-2 lg:order-1 overflow-hidden rounded-2xl shadow-luxe">
@@ -189,61 +186,62 @@ function Home() {
           </Reveal>
           <Reveal delay={0.15} className="order-1 lg:order-2">
             <p className="eyebrow">Grand Event Venues</p>
-            <h2 className="mt-3 font-display text-4xl leading-tight text-charcoal md:text-5xl">Host Your Special Occasions in Elegance</h2>
+            <h2 className="mt-3 font-display text-4xl leading-tight text-charcoal md:text-5xl">Spaces for Every Gathering</h2>
             <div className="gold-rule mt-5" />
             <p className="mt-6 text-muted-foreground">
-              Elegant ballroom with crystal chandeliers and sophisticated decor. Perfect for kitty parties, birthday celebrations, and social gatherings of 50–100 guests. Our dedicated events team transforms your vision into reality.
+              From intimate functions to lively celebrations, our elegant party hall and flexible spaces are tailored to suit every occasion. Perfect for kitty parties, birthdays and social gatherings of up to 100 guests.
             </p>
             <div className="mt-6 flex flex-wrap gap-2">
               {["Stage", "Sound System", "Chandeliers", "Dance Floor", "Catering"].map((f) => (
                 <span key={f} className="rounded-full bg-beige px-4 py-1.5 text-xs text-brown">{f}</span>
               ))}
             </div>
-            <div className="mt-8"><Link to="/venue"><LuxeButton variant="outline"><span className="text-charcoal">Explore Venues</span></LuxeButton></Link></div>
+            <div className="mt-8 flex flex-wrap gap-4">
+              <Link to="/venue"><LuxeButton><span>Explore Venues</span></LuxeButton></Link>
+              <button onClick={() => open()}><LuxeButton variant="outline"><span className="text-charcoal">Inquire Now</span></LuxeButton></button>
+            </div>
           </Reveal>
         </div>
       </section>
 
-      {/* OFFERS */}
-      <section className="bg-beige py-24">
-        <div className="container-luxe">
-          <SectionHeading center eyebrow="Exclusive Offers" title="Special Deals & Packages"
-            sub="Curated experiences for our valued guests" />
-          <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {offers.map((o, i) => (
-              <Reveal key={o.title} delay={i * 0.08}>
-                <div className="group flex h-full flex-col rounded-2xl bg-card p-7 shadow-card transition hover:-translate-y-2 hover:shadow-luxe">
-                  <span className="text-xs uppercase tracking-[0.2em] text-gold">{o.tag}</span>
-                  <h3 className="mt-3 font-display text-2xl text-charcoal">{o.title}</h3>
-                  <p className="mt-3 flex-1 text-sm text-muted-foreground">{o.text}</p>
-                  <button onClick={() => open()} className="mt-5 flex items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-charcoal">
-                    Enquire <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
-                  </button>
-                </div>
-              </Reveal>
-            ))}
-          </div>
+      {/* PRIVATE EVENTS DARK BAND */}
+      <section className="relative overflow-hidden py-28">
+        <img src={site.images.meeting} alt="" className="absolute inset-0 h-full w-full object-cover" loading="lazy" />
+        <div className="absolute inset-0 bg-charcoal/80" />
+        <div className="container-luxe relative z-10 text-center">
+          <Reveal>
+            <p className="eyebrow text-gold-soft">Celebrate With Us</p>
+            <h2 className="mx-auto mt-4 max-w-3xl font-display text-4xl text-ivory md:text-6xl">
+              Private Events, Meetings &amp; Family Functions
+            </h2>
+            <p className="mx-auto mt-5 max-w-xl text-ivory/70">
+              Let us host your most cherished moments with impeccable service and elegant spaces.
+            </p>
+            <div className="mt-9 flex justify-center">
+              <button onClick={() => open()}><LuxeButton>Plan Your Event</LuxeButton></button>
+            </div>
+          </Reveal>
         </div>
       </section>
 
-      {/* GALLERY */}
+      {/* CURATED PRIVILEGES */}
       <section className="container-luxe py-24">
-        <SectionHeading center eyebrow="Hotel Gallery" title="Explore Our Beautiful Spaces"
-          sub="A glimpse into the experiences that await you" />
-        <div className="mt-14 grid grid-cols-2 gap-4 md:grid-cols-4">
-          {[
-            { src: site.images.executive, t: "Executive Room", tag: "Featured" },
-            { src: site.images.deluxe, t: "Premium Room", tag: "New" },
-            { src: site.images.meeting, t: "Meeting Area", tag: "Popular" },
-            { src: site.images.dining, t: "Dining Area", tag: "Luxury" },
-          ].map((g, i) => (
-            <Reveal key={g.t} delay={i * 0.08} className={i === 0 ? "col-span-2 row-span-2" : ""}>
-              <div className="group relative h-full min-h-[12rem] overflow-hidden rounded-2xl">
-                <img src={g.src} alt={g.t} className="h-full w-full object-cover transition duration-700 group-hover:scale-110" loading="lazy" />
-                <div className="absolute inset-0 bg-gradient-to-t from-charcoal/70 to-transparent opacity-0 transition group-hover:opacity-100" />
-                <div className="absolute bottom-4 left-4 translate-y-2 opacity-0 transition group-hover:translate-y-0 group-hover:opacity-100">
-                  <p className="font-display text-xl text-ivory">{g.t}</p>
-                  <span className="text-xs uppercase tracking-wider text-gold-soft">{g.tag}</span>
+        <SectionHeading center eyebrow="Exclusive" title="Curated Privileges"
+          sub="Thoughtful touches that elevate every stay" />
+        <div className="mt-14 grid grid-cols-1 gap-8 md:grid-cols-3">
+          {curatedPrivileges.map((p, i) => (
+            <Reveal key={p.title} delay={i * 0.1}>
+              <div className="group flex h-full flex-col overflow-hidden rounded-2xl bg-card shadow-card transition hover:-translate-y-2 hover:shadow-luxe">
+                <div className="h-48 overflow-hidden">
+                  <img src={p.image} alt={p.title} className="h-full w-full object-cover transition duration-700 group-hover:scale-110" loading="lazy" />
+                </div>
+                <div className="flex flex-1 flex-col p-7">
+                  <span className="text-xs uppercase tracking-[0.2em] text-gold">{p.tag}</span>
+                  <h3 className="mt-3 font-display text-2xl text-charcoal">{p.title}</h3>
+                  <p className="mt-3 flex-1 text-sm text-muted-foreground">{p.text}</p>
+                  <button onClick={() => open()} className="mt-5 flex items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-charcoal">
+                    Enquire <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+                  </button>
                 </div>
               </div>
             </Reveal>
