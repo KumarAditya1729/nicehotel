@@ -190,7 +190,7 @@ function Home() {
           <SectionHeading center eyebrow="Stay" title="Rooms & Suites"
             sub="Choose from our executive and deluxe accommodations" />
           <div className="mt-14 grid grid-cols-1 gap-8 md:grid-cols-2">
-            {rooms.map((r, i) => (
+            {roomTeaser.map((r, i) => (
               <Reveal key={r.slug} delay={i * 0.12}>
                 <TiltCard className="group h-full">
                 <div className="group overflow-hidden rounded-2xl bg-ivory shadow-luxe">
@@ -206,7 +206,7 @@ function Home() {
                     <p className="mt-2 text-sm text-muted-foreground">{r.description}</p>
                     <div className="mt-5 flex items-end justify-between">
                       <p className="font-display text-2xl text-gold">₹{r.price}<span className="text-sm text-muted-foreground">/night</span></p>
-                      <button onClick={() => open(r.name)} className="text-xs font-medium uppercase tracking-[0.2em] text-charcoal link-underline">Book This Room</button>
+                      <button onClick={() => open(r.name)} aria-label={`Book ${r.name}`} className="text-xs font-medium uppercase tracking-[0.2em] text-charcoal link-underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold">Book This Room</button>
                     </div>
                   </div>
                 </div>
