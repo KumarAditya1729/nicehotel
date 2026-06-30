@@ -34,7 +34,7 @@ function table(t: string) {
 }
 
 export const adminUnlock = createServerFn({ method: "POST" })
-  .inputValidator((d: { password: string }) => d)
+  .validator((d: { password: string }) => d)
   .handler(async ({ data }) => {
     const expected = process.env.ADMIN_PASSWORD;
     if (!expected) throw new Error("Admin password not configured");
@@ -56,7 +56,7 @@ export const adminLogout = createServerFn({ method: "POST" }).handler(async () =
 });
 
 export const adminList = createServerFn({ method: "POST" })
-  .inputValidator((d: { table: string; orderBy?: string; ascending?: boolean }) => d)
+  .validator((d: { table: string; orderBy?: string; ascending?: boolean }) => d)
   .handler(async ({ data }) => {
     await assertUnlocked();
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
@@ -68,7 +68,7 @@ export const adminList = createServerFn({ method: "POST" })
   });
 
 export const adminUpsert = createServerFn({ method: "POST" })
-  .inputValidator((d: { table: string; values: Record<string, unknown>; id?: string }) => d)
+  .validator((d: { table: string; values: Record<string, unknown>; id?: string }) => d)
   .handler(async ({ data }) => {
     await assertUnlocked();
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
@@ -84,7 +84,7 @@ export const adminUpsert = createServerFn({ method: "POST" })
   });
 
 export const adminDelete = createServerFn({ method: "POST" })
-  .inputValidator((d: { table: string; id: string }) => d)
+  .validator((d: { table: string; id: string }) => d)
   .handler(async ({ data }) => {
     await assertUnlocked();
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
@@ -94,7 +94,7 @@ export const adminDelete = createServerFn({ method: "POST" })
   });
 
 export const adminUpload = createServerFn({ method: "POST" })
-  .inputValidator((d: { filename: string; contentType: string; base64: string }) => d)
+  .validator((d: { filename: string; contentType: string; base64: string }) => d)
   .handler(async ({ data }) => {
     await assertUnlocked();
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
@@ -124,7 +124,7 @@ export const adminSettingsList = createServerFn({ method: "GET" }).handler(async
 });
 
 export const adminSettingSave = createServerFn({ method: "POST" })
-  .inputValidator((d: { key: string; value: CmsBlock }) => d)
+  .validator((d: { key: string; value: CmsBlock }) => d)
   .handler(async ({ data }) => {
     await assertUnlocked();
     if (!data.key) throw new Error("Key is required");
@@ -137,7 +137,7 @@ export const adminSettingSave = createServerFn({ method: "POST" })
   });
 
 export const adminSettingDelete = createServerFn({ method: "POST" })
-  .inputValidator((d: { key: string }) => d)
+  .validator((d: { key: string }) => d)
   .handler(async ({ data }) => {
     await assertUnlocked();
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
@@ -147,7 +147,7 @@ export const adminSettingDelete = createServerFn({ method: "POST" })
   });
 
 export const adminResendEmail = createServerFn({ method: "POST" })
-  .inputValidator((d: { id: string }) => d)
+  .validator((d: { id: string }) => d)
   .handler(async ({ data }) => {
     await assertUnlocked();
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
@@ -176,7 +176,7 @@ export const adminResendEmail = createServerFn({ method: "POST" })
 // ----- Notifications -----
 
 export const adminNotificationsMarkRead = createServerFn({ method: "POST" })
-  .inputValidator((d: { id?: string; all?: boolean }) => d)
+  .validator((d: { id?: string; all?: boolean }) => d)
   .handler(async ({ data }) => {
     await assertUnlocked();
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
@@ -198,7 +198,7 @@ export const adminNotificationsClear = createServerFn({ method: "POST" })
   });
 
 export const adminBookingRooms = createServerFn({ method: "POST" })
-  .inputValidator((d: { bookingId: string }) => d)
+  .validator((d: { bookingId: string }) => d)
   .handler(async ({ data }) => {
     await assertUnlocked();
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
@@ -212,7 +212,7 @@ export const adminBookingRooms = createServerFn({ method: "POST" })
   });
 
 export const adminBookingRoomUpdate = createServerFn({ method: "POST" })
-  .inputValidator((d: { id: string; values: Record<string, unknown> }) => d)
+  .validator((d: { id: string; values: Record<string, unknown> }) => d)
   .handler(async ({ data }) => {
     await assertUnlocked();
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");

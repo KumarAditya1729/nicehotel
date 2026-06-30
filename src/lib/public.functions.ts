@@ -24,7 +24,7 @@ export const getRooms = createServerFn({ method: "GET" }).handler(async () => {
  * those dates (cancelled bookings are ignored). Defaults to tonight's stay.
  */
 export const getRoomAvailability = createServerFn({ method: "GET" })
-  .inputValidator((data?: { checkIn?: string; checkOut?: string }) => data ?? {})
+  .validator((data?: { checkIn?: string; checkOut?: string }) => data ?? {})
   .handler(async ({ data }) => {
     const today = new Date().toISOString().slice(0, 10);
     const tomorrow = new Date(Date.now() + 86400000).toISOString().slice(0, 10);

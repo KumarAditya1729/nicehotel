@@ -39,7 +39,7 @@ const receiptSchema = z.object({
 });
 
 export const sendBookingEmail = createServerFn({ method: "POST" })
-  .inputValidator((d: unknown) => bookingSchema.parse(d))
+  .validator((d: unknown) => bookingSchema.parse(d))
   .handler(async ({ data }) => {
     const { sendEmails, adminEmail } = await import("./email.server");
     const t = await import("./email-templates");
@@ -58,7 +58,7 @@ export const sendBookingEmail = createServerFn({ method: "POST" })
   });
 
 export const sendContactEmail = createServerFn({ method: "POST" })
-  .inputValidator((d: unknown) => contactSchema.parse(d))
+  .validator((d: unknown) => contactSchema.parse(d))
   .handler(async ({ data }) => {
     // 1) Persist the enquiry first so a message is never lost, even if email fails.
     try {
@@ -98,7 +98,7 @@ export const sendContactEmail = createServerFn({ method: "POST" })
   });
 
 export const sendPaymentReceiptEmail = createServerFn({ method: "POST" })
-  .inputValidator((d: unknown) => receiptSchema.parse(d))
+  .validator((d: unknown) => receiptSchema.parse(d))
   .handler(async ({ data }) => {
     const { sendEmails, adminEmail } = await import("./email.server");
     const t = await import("./email-templates");
@@ -117,7 +117,7 @@ export const sendPaymentReceiptEmail = createServerFn({ method: "POST" })
   });
 
 export const sendVenueEnquiry = createServerFn({ method: "POST" })
-  .inputValidator((d: unknown) => venueSchema.parse(d))
+  .validator((d: unknown) => venueSchema.parse(d))
   .handler(async ({ data }) => {
     const summary = [
       `Venue: ${data.venue ?? "—"}`,
@@ -179,7 +179,7 @@ const sendEmailSchema = z.object({
 });
 
 export const sendEmail = createServerFn({ method: "POST" })
-  .inputValidator((d: unknown) => sendEmailSchema.parse(d))
+  .validator((d: unknown) => sendEmailSchema.parse(d))
   .handler(async ({ data }) => {
     const { sendEmail: send } = await import("./email.server");
     const { renderEmail } = await import("./email-templates");
@@ -204,7 +204,7 @@ const newsletterSchema = z.object({
 });
 
 export const sendNewsletter = createServerFn({ method: "POST" })
-  .inputValidator((d: unknown) => newsletterSchema.parse(d))
+  .validator((d: unknown) => newsletterSchema.parse(d))
   .handler(async ({ data }) => {
     const { sendEmail: send } = await import("./email.server");
     const { renderEmail } = await import("./email-templates");
