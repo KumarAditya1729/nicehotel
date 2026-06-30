@@ -61,7 +61,7 @@ export function Footer() {
         <div className="container-luxe flex flex-col items-center justify-between gap-3 py-6 text-xs text-ivory/50 sm:flex-row">
           <p>© 2026 Nice Hotel &amp; Restaurant. All Rights Reserved.</p>
           <p>Crafted with ♥ for premium hospitality</p>
-          <Link to="/contact" className="hover:text-gold">Admin Login</Link>
+          <Link to="/admin" className="hover:text-gold">Admin Login</Link>
         </div>
       </div>
     </footer>
