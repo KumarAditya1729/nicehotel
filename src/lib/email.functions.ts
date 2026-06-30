@@ -74,6 +74,15 @@ export const sendContactEmail = createServerFn({ method: "POST" })
     } catch (e) {
       console.error("Enquiry save error", e);
     }
+    try {
+      const { notify } = await import("./notifications.server");
+      await notify({
+        type: "enquiry",
+        title: `New contact message — ${data.name}`,
+        body: data.message.slice(0, 140),
+        link: "/admin/enquiries",
+      });
+    } catch (e) { console.error("notify error", e); }
     // 2) Send notification emails (best-effort — failure must not break the flow).
     try {
       const { sendEmails, adminEmail } = await import("./email.server");
