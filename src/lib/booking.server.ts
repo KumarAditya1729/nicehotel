@@ -30,3 +30,30 @@ export async function computeQuote(roomId: string, checkIn: string, checkOut: st
   const amountInr = Number(room.price) * nights;
   return { room, nights, amountInr };
 }
+
+/**
+ * Throws if the room has an overlapping active booking for the given dates.
+ * Overlap rule: existing.check_in < newCheckOut AND existing.check_out > newCheckIn.
+ */
+export async function assertAvailable(roomId: string, checkIn: string, checkOut: string) {
+  const { data, error } = await (supabaseAdmin as any)
+    .from("bookings")
+    .select("id")
+    .eq("room_id", roomId)
+    .neq("status", "cancelled")
+    .lt("check_in", checkOut)
+    .gt("check_out", checkIn)
+    .limit(1);
+  if (error) throw new Error("Could not check availability");
+  if (data && data.length > 0) throw new Error("Selected dates are no longer available for this room");
+}
+
+/** Returns an existing booking id for a Razorpay payment/order (idempotency), or null. */
+export async function findExistingBooking(orderId: string, paymentId: string): Promise<string | null> {
+  const { data } = await (supabaseAdmin as any)
+    .from("bookings")
+    .select("id")
+    .or(`razorpay_payment_id.eq.${paymentId},razorpay_order_id.eq.${orderId}`)
+    .limit(1);
+  return data && data.length > 0 ? data[0].id : null;
+}
