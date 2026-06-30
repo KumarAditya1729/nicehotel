@@ -61,12 +61,12 @@ function Home() {
           initial={{ scale: 1.15 }} animate={{ scale: 1 }} transition={{ duration: 6, ease: "easeOut" }}
           loading="eager"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-charcoal/70 via-charcoal/45 to-charcoal/75" />
+        <div className="absolute inset-0 bg-gradient-to-b from-charcoal/35 via-charcoal/20 to-charcoal/55" />
         <div className="container-luxe relative z-10 text-center">
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.8 }}
             className="eyebrow text-gold-soft">Premium Hospitality · Mansa, Punjab</motion.p>
           <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35, duration: 1 }}
-            className="mx-auto mt-5 max-w-4xl display-hero text-5xl text-ivory md:text-8xl">
+            className="mx-auto mt-5 max-w-6xl whitespace-nowrap display-hero text-[2.6rem] text-ivory [text-shadow:0_2px_24px_rgba(0,0,0,0.55)] sm:text-6xl md:text-7xl lg:text-8xl">
             Nice Hotel<span className="italic text-gold-soft"> &amp; </span>Restaurant
           </motion.h1>
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.9 }}
