@@ -21,9 +21,8 @@ export async function sendEmails(messages: Message[]) {
   const { username, password } = getCreds();
   const mailer = await WorkerMailer.connect({
     host: "smtp.gmail.com",
-    port: 587,
+    port: 465,
     secure: true,
-    startTls: true,
     credentials: { username, password },
     authType: "login",
   });
