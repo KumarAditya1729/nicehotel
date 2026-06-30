@@ -501,6 +501,7 @@ export type Database = {
           seo_title: string | null
           sort_order: number
           status: string
+          total_units: number
           updated_at: string
           weekend_price: number | null
         }
@@ -521,6 +522,7 @@ export type Database = {
           seo_title?: string | null
           sort_order?: number
           status?: string
+          total_units?: number
           updated_at?: string
           weekend_price?: number | null
         }
@@ -541,6 +543,7 @@ export type Database = {
           seo_title?: string | null
           sort_order?: number
           status?: string
+          total_units?: number
           updated_at?: string
           weekend_price?: number | null
         }
