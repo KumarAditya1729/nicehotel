@@ -214,3 +214,33 @@ export const offers = [
 ];
 
 export type MenuCategory = { category: string; items: { name: string; price: string }[] };
+
+export const realComfortStats = [
+  { value: "9", label: "Luxury Rooms" },
+  { value: "1", label: "Party Hall" },
+  { value: "24/7", label: "Service" },
+];
+
+export const hospitality = [
+  { icon: "home", title: "Comfortable Rooms", text: "Spacious, well-appointed rooms designed for restful, relaxing stays." },
+  { icon: "utensils", title: "Restaurant On-Site", text: "Fine dining and authentic flavours served fresh, all day long." },
+  { icon: "sparkles", title: "Modern Amenities", text: "Smart TVs, fast WiFi and modern comforts in every room." },
+  { icon: "shield", title: "Safe & Secure", text: "24/7 security and surveillance keeping you safe at all times." },
+  { icon: "handshake", title: "Warm Hospitality", text: "Personalised, attentive service from a dedicated team." },
+  { icon: "map-pin", title: "Easy Access", text: "Centrally located with easy access to the city and stations." },
+  { icon: "building", title: "Event Space", text: "An elegant party hall for celebrations and gatherings." },
+  { icon: "key", title: "Central Location", text: "In the heart of Mansa, close to markets and transport." },
+  { icon: "leaf", title: "Relaxed Atmosphere", text: "A calm, refined ambiance for an unforgettable escape." },
+];
+
+export const breakfastFeature = {
+  icon: "coffee",
+  title: "Breakfast",
+  text: "Start your day with a fresh, hearty breakfast served every morning.",
+};
+
+export const curatedPrivileges = [
+  { tag: "Stay", title: "Every Need, Cared For", text: "From valet parking to round-the-clock room service, every detail is anticipated so you can simply relax.", image: site.images.executive },
+  { tag: "Dining", title: "Memorable Dining", text: "Savour signature dishes crafted with passion, served in a refined and intimate setting.", image: site.images.deluxe },
+  { tag: "Events", title: "Family Functions", text: "Host kitty parties, birthdays and gatherings in a beautifully appointed space.", image: site.images.hall },
+];
