@@ -5,6 +5,7 @@ import diningImg from "@/assets/hotel/dining.png.asset.json";
 import hallImg from "@/assets/hotel/hall.png.asset.json";
 import dining2Img from "@/assets/hotel/dining2.png.asset.json";
 import meeting1Img from "@/assets/hotel/meeting1.png.asset.json";
+import meetingRoomImg from "@/assets/hotel/meeting-room.jpg";
 
 export const site = {
   name: "Nice Hotel And Restaurant",
@@ -28,6 +29,7 @@ export const site = {
     hall: hallImg.url,
     dining2: dining2Img.url,
     meeting1: meeting1Img.url,
+    meetingRoom: meetingRoomImg,
   },
 };
 
