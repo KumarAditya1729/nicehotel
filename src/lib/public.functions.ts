@@ -50,3 +50,25 @@ export const getEvents = createServerFn({ method: "GET" }).handler(async () => {
   if (error) throw new Error(error.message);
   return data ?? [];
 });
+
+export const getMenu = createServerFn({ method: "GET" }).handler(async () => {
+  const supabase = await publicClient();
+  const { data: cats, error: cErr } = await supabase
+    .from("menu_categories")
+    .select("id,name,sort_order")
+    .eq("is_active", true)
+    .order("sort_order", { ascending: true });
+  if (cErr) throw new Error(cErr.message);
+  const { data: items, error: iErr } = await supabase
+    .from("menu_items")
+    .select("id,category_id,name,price,sort_order")
+    .eq("is_available", true)
+    .order("sort_order", { ascending: true });
+  if (iErr) throw new Error(iErr.message);
+  return (cats ?? []).map((c) => ({
+    category: c.name,
+    items: (items ?? [])
+      .filter((i) => i.category_id === c.id)
+      .map((i) => ({ name: i.name, price: i.price ?? "" })),
+  })).filter((c) => c.items.length > 0);
+});
