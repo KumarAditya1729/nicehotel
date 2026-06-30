@@ -43,6 +43,13 @@ export const sendBookingEmail = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const { sendEmails, adminEmail } = await import("./email.server");
     const t = await import("./email-templates");
+    const { notify } = await import("./notifications.server");
+    await notify({
+      type: "booking",
+      title: `New booking request — ${data.name}`,
+      body: `${data.roomType ?? "Room"} · ${data.checkIn ?? "?"} → ${data.checkOut ?? "?"} · ${data.guests ?? "?"} guest(s)`,
+      link: "/admin/bookings",
+    });
     await sendEmails([
       { to: data.email, subject: "Your reservation request — Nice Hotel & Restaurant", html: t.bookingGuestEmail(data), type: "booking_confirmation", payload: { type: "booking_confirmation", to: data.email, data } },
       { to: adminEmail(), subject: `New booking: ${data.name}`, html: t.bookingAdminEmail(data), reply: data.email, type: "admin_alert", payload: { type: "admin_alert", to: adminEmail(), data } },
