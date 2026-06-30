@@ -156,6 +156,7 @@ function Home() {
           <div className="mt-14 grid grid-cols-1 gap-8 md:grid-cols-2">
             {rooms.map((r, i) => (
               <Reveal key={r.slug} delay={i * 0.12}>
+                <TiltCard className="group h-full">
                 <div className="group overflow-hidden rounded-2xl bg-ivory shadow-luxe">
                   <div className="relative h-64 overflow-hidden">
                     <img src={r.image} alt={r.name} className="h-full w-full object-cover transition duration-700 group-hover:scale-110" loading="lazy" />
@@ -173,6 +174,7 @@ function Home() {
                     </div>
                   </div>
                 </div>
+                </TiltCard>
               </Reveal>
             ))}
           </div>
