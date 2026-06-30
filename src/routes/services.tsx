@@ -5,8 +5,23 @@ import { Reveal } from "@/components/site/Reveal";
 import { Icon } from "@/components/site/Icon";
 import { PageHeader, SectionHeading, CtaBand } from "@/components/site/ui";
 import { breadcrumbLd } from "@/lib/seo";
+import { getServices, getOffers } from "@/lib/public.functions";
 
 export const Route = createFileRoute("/services")({
+  loader: async () => {
+    try {
+      const [dbServices, dbOffers] = await Promise.all([getServices(), getOffers()]);
+      return { dbServices, dbOffers };
+    } catch {
+      return { dbServices: [] as Awaited<ReturnType<typeof getServices>>, dbOffers: [] as Awaited<ReturnType<typeof getOffers>> };
+    }
+  },
+  errorComponent: () => (
+    <div className="container-luxe py-32 text-center">
+      <h1 className="font-display text-3xl text-charcoal">Services are loading slowly</h1>
+      <p className="mt-3 text-muted-foreground">Please refresh the page.</p>
+    </div>
+  ),
   head: () => ({
     meta: [
       { title: "Services & Amenities — Nice Hotel And Restaurant, Mansa" },
@@ -22,13 +37,37 @@ export const Route = createFileRoute("/services")({
   component: Services,
 });
 
+type GroupedService = { title: string; text: string; icon: string; tags: string[] };
+
 function Services() {
+  const { dbServices, dbOffers } = Route.useLoaderData();
+
+  const grouped: Record<string, GroupedService[]> = {};
+  if (dbServices.length) {
+    for (const s of dbServices) {
+      const g = (s as any).group_name || "Services";
+      (grouped[g] ??= []).push({
+        title: (s as any).title,
+        text: (s as any).description ?? "",
+        icon: (s as any).icon ?? "sparkles",
+        tags: Array.isArray((s as any).tags) ? (s as any).tags : [],
+      });
+    }
+  }
+  const serviceGroups = Object.keys(grouped).length
+    ? Object.entries(grouped)
+    : (Object.entries(services) as [string, GroupedService[]][]);
+
+  const offerList = dbOffers.length
+    ? dbOffers.map((o: any) => ({ title: o.title, text: o.description ?? "", tag: o.type ?? "Offer" }))
+    : offers;
+
   return (
     <>
       <PageHeader eyebrow="What We Offer" title="Services & Amenities" sub="World-class hospitality services crafted for your comfort" image={site.images.meeting} />
 
       <section className="container-luxe space-y-20 py-24">
-        {Object.entries(services).map(([group, items]) => (
+        {serviceGroups.map(([group, items]) => (
           <div key={group}>
             <Reveal><SectionHeading eyebrow="Premium Offering" title={group} /></Reveal>
             <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -55,10 +94,10 @@ function Services() {
         <div className="container-luxe">
           <SectionHeading center eyebrow="Special Offers" title="Exclusive packages for a memorable stay" />
           <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {offers.map((o, i) => (
+            {offerList.map((o, i) => (
               <Reveal key={o.title} delay={i * 0.08}>
                 <div className="flex h-full flex-col rounded-2xl bg-card p-7 shadow-card">
-                  <span className="w-fit rounded-full bg-gold/15 px-3 py-1 text-xs uppercase tracking-wider text-gold">{o.tag}</span>
+                  <span className="w-fit rounded-full bg-gold/15 px-3 py-1 text-xs uppercase tracking-wider text-gold capitalize">{o.tag}</span>
                   <h3 className="mt-4 font-display text-2xl text-charcoal">{o.title}</h3>
                   <p className="mt-2 text-sm text-muted-foreground">{o.text}</p>
                 </div>
