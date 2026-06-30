@@ -64,6 +64,29 @@ function BookingWidget() {
 
 function Home() {
   const { open } = useBooking();
+  const { dbRooms } = Route.useLoaderData();
+  const seen = new Set<string>();
+  const teaser = (dbRooms as any[])
+    .filter((r) => {
+      const k = `${(r.name ?? "").toLowerCase()}|${(r.category ?? "").toLowerCase()}`;
+      if (seen.has(k)) return false;
+      seen.add(k);
+      return true;
+    })
+    .slice(0, 2)
+    .map((r) => {
+      const fb = rooms.find((s) => s.category?.toLowerCase() === (r.category ?? "").toLowerCase()) ?? rooms[0];
+      return {
+        slug: r.id as string,
+        name: (r.name as string) ?? fb.name,
+        badge: r.category ? `${r.category} Suite` : fb.badge,
+        rating: fb.rating,
+        price: Number(r.price) || fb.price,
+        image: (Array.isArray(r.images) && r.images[0]) || fb.image,
+        description: (r.description as string) || fb.description,
+      };
+    });
+  const roomTeaser = teaser.length ? teaser : rooms;
   return (
     <>
       {/* HERO */}
