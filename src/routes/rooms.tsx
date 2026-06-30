@@ -7,8 +7,16 @@ import { PageHeader, SectionHeading, CtaBand } from "@/components/site/ui";
 import { useBooking } from "@/components/site/booking";
 import { TiltCard } from "@/components/site/TiltCard";
 import { breadcrumbLd } from "@/lib/seo";
+import { getRooms } from "@/lib/public.functions";
 
 export const Route = createFileRoute("/rooms")({
+  loader: async () => {
+    try {
+      return { dbRooms: await getRooms() };
+    } catch {
+      return { dbRooms: [] as Awaited<ReturnType<typeof getRooms>> };
+    }
+  },
   head: () => ({
     meta: [
       { title: "Luxury Rooms & Suites — Nice Hotel And Restaurant, Mansa" },
@@ -21,17 +29,71 @@ export const Route = createFileRoute("/rooms")({
     links: [{ rel: "canonical", href: "/rooms" }],
     scripts: [breadcrumbLd([{ name: "Home", path: "/" }, { name: "Rooms", path: "/rooms" }])],
   }),
+  errorComponent: () => (
+    <div className="container-luxe py-32 text-center">
+      <h1 className="font-display text-3xl text-charcoal">Rooms are loading slowly</h1>
+      <p className="mt-3 text-muted-foreground">Please refresh the page to view our suites.</p>
+    </div>
+  ),
   component: Rooms,
 });
 
+type DisplayRoom = {
+  slug: string;
+  name: string;
+  category: string;
+  badge: string;
+  rating: number;
+  price: number;
+  image: string;
+  size: string;
+  occupancy: string;
+  view: string;
+  description: string;
+  amenities: string[];
+};
+
+function fallbackImage(category?: string) {
+  return /deluxe/i.test(category ?? "") ? site.images.deluxe : site.images.executive;
+}
+
+function mapDbRooms(dbRooms: Awaited<ReturnType<typeof getRooms>>): DisplayRoom[] {
+  const seen = new Set<string>();
+  const result: DisplayRoom[] = [];
+  for (const r of dbRooms as any[]) {
+    const key = `${(r.name ?? "").toLowerCase()}|${(r.category ?? "").toLowerCase()}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    const fallback = rooms.find((s) => s.category?.toLowerCase() === (r.category ?? "").toLowerCase());
+    result.push({
+      slug: r.id,
+      name: r.name ?? "Suite",
+      category: r.category ?? "Room",
+      badge: r.category ? `${r.category} Suite` : "Signature Stay",
+      rating: 4.8,
+      price: Number(r.price) || fallback?.price || 0,
+      image: (Array.isArray(r.images) && r.images[0]) || fallback?.image || fallbackImage(r.category),
+      size: r.floor ? `Floor ${r.floor}` : fallback?.size || "Spacious",
+      occupancy: r.capacity ? `${r.capacity} Guest${r.capacity > 1 ? "s" : ""}` : fallback?.occupancy || "2 Adults",
+      view: fallback?.view || "City View",
+      description: r.description || fallback?.description || "A refined retreat with premium comforts.",
+      amenities: (Array.isArray(r.amenities) && r.amenities.length ? r.amenities : fallback?.amenities) || [],
+    });
+  }
+  return result;
+}
+
 function Rooms() {
   const { open } = useBooking();
+  const { dbRooms } = Route.useLoaderData();
+  const mapped = mapDbRooms(dbRooms);
+  const list: DisplayRoom[] = mapped.length ? mapped : (rooms as DisplayRoom[]);
   return (
     <>
       <PageHeader eyebrow="Accommodations" title="Luxury Rooms & Suites" sub="Experience elegance and comfort in our premium accommodations" image={site.images.deluxe} />
 
       <section className="container-luxe space-y-12 py-24">
-        {rooms.map((r, i) => (
+        {list.map((r, i) => (
           <Reveal key={r.slug} delay={i * 0.05}>
             <div className={`grid grid-cols-1 overflow-hidden rounded-2xl bg-card shadow-luxe lg:grid-cols-2 ${i % 2 ? "lg:[direction:rtl]" : ""}`}>
               <div className="relative h-72 overflow-hidden lg:h-auto [direction:ltr]">
@@ -57,7 +119,7 @@ function Rooms() {
                 </div>
                 <div className="mt-8 flex items-end justify-between">
                   <p className="font-display text-3xl text-gold">₹{r.price}<span className="text-sm text-muted-foreground">/night</span></p>
-                  <button onClick={() => open(r.name)} className="rounded-full bg-charcoal px-7 py-3 text-xs font-medium uppercase tracking-[0.2em] text-ivory transition hover:bg-gold">Book Now</button>
+                  <button onClick={() => open(r.name)} aria-label={`Book ${r.name}`} className="rounded-full bg-charcoal px-7 py-3 text-xs font-medium uppercase tracking-[0.2em] text-ivory transition hover:bg-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold">Book Now</button>
                 </div>
               </div>
             </div>
