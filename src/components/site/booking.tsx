@@ -3,6 +3,8 @@ import { X } from "lucide-react";
 import { createContext, useContext, useState, type ReactNode } from "react";
 import { toast } from "sonner";
 import { site, roomTypes } from "@/data/content";
+import { useServerFn } from "@tanstack/react-start";
+import { sendBookingEmail } from "@/lib/email.functions";
 
 type Ctx = { open: (room?: string) => void };
 const BookingCtx = createContext<Ctx>({ open: () => {} });
@@ -11,18 +13,45 @@ export const useBooking = () => useContext(BookingCtx);
 export function BookingProvider({ children }: { children: ReactNode }) {
   const [isOpen, setOpen] = useState(false);
   const [room, setRoom] = useState<string>("");
+  const [sending, setSending] = useState(false);
+  const submitBooking = useServerFn(sendBookingEmail);
 
   const open = (r?: string) => {
     setRoom(r ?? "");
     setOpen(true);
   };
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setOpen(false);
-    toast.success("Reservation request received", {
-      description: `Thank you — our team will confirm your booking shortly at ${site.phone}.`,
-    });
+    const form = e.target as HTMLFormElement;
+    const fd = new FormData(form);
+    setSending(true);
+    try {
+      await submitBooking({
+        data: {
+          name: String(fd.get("name") || ""),
+          phone: String(fd.get("phone") || ""),
+          email: String(fd.get("email") || ""),
+          checkIn: String(fd.get("checkIn") || ""),
+          checkOut: String(fd.get("checkOut") || ""),
+          guests: String(fd.get("guests") || ""),
+          roomType: room,
+          requests: String(fd.get("requests") || ""),
+        },
+      });
+      setOpen(false);
+      form.reset();
+      setRoom("");
+      toast.success("Reservation request received", {
+        description: `Thank you — a confirmation email is on its way. Our team will confirm shortly at ${site.phone}.`,
+      });
+    } catch {
+      toast.error("Could not send your request", {
+        description: `Please call us at ${site.phone} and we'll assist you right away.`,
+      });
+    } finally {
+      setSending(false);
+    }
   };
 
   const field =
@@ -62,28 +91,29 @@ export function BookingProvider({ children }: { children: ReactNode }) {
                 Share your details and our concierge will confirm availability.
               </p>
               <form onSubmit={onSubmit} className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
-                <input required placeholder="Full Name" className={field} aria-label="Full name" />
-                <input required placeholder="Phone" className={field} aria-label="Phone" />
-                <input required type="email" placeholder="Email" className={`${field} sm:col-span-2`} aria-label="Email" />
+                <input required name="name" placeholder="Full Name" className={field} aria-label="Full name" />
+                <input required name="phone" placeholder="Phone" className={field} aria-label="Phone" />
+                <input required name="email" type="email" placeholder="Email" className={`${field} sm:col-span-2`} aria-label="Email" />
                 <label className="text-xs text-muted-foreground sm:col-span-1">
                   Check-in
-                  <input required type="date" className={`${field} mt-1`} aria-label="Check-in date" />
+                  <input required name="checkIn" type="date" className={`${field} mt-1`} aria-label="Check-in date" />
                 </label>
                 <label className="text-xs text-muted-foreground sm:col-span-1">
                   Check-out
-                  <input required type="date" className={`${field} mt-1`} aria-label="Check-out date" />
+                  <input required name="checkOut" type="date" className={`${field} mt-1`} aria-label="Check-out date" />
                 </label>
-                <input type="number" min={1} defaultValue={2} placeholder="Guests" className={field} aria-label="Guests" />
-                <select className={field} value={room} onChange={(e) => setRoom(e.target.value)} aria-label="Room type">
+                <input name="guests" type="number" min={1} defaultValue={2} placeholder="Guests" className={field} aria-label="Guests" />
+                <select name="roomType" className={field} value={room} onChange={(e) => setRoom(e.target.value)} aria-label="Room type">
                   <option value="">Room Type</option>
                   {roomTypes.map((r) => <option key={r} value={r}>{r}</option>)}
                 </select>
-                <textarea placeholder="Special Requests" rows={2} className={`${field} sm:col-span-2`} aria-label="Special requests" />
+                <textarea name="requests" placeholder="Special Requests" rows={2} className={`${field} sm:col-span-2`} aria-label="Special requests" />
                 <button
                   type="submit"
-                  className="sm:col-span-2 mt-1 rounded-full bg-charcoal px-6 py-3.5 text-sm font-medium uppercase tracking-[0.2em] text-ivory transition hover:bg-gold"
+                  disabled={sending}
+                  className="sm:col-span-2 mt-1 rounded-full bg-charcoal px-6 py-3.5 text-sm font-medium uppercase tracking-[0.2em] text-ivory transition hover:bg-gold disabled:opacity-60"
                 >
-                  Request Reservation
+                  {sending ? "Sending…" : "Request Reservation"}
                 </button>
               </form>
             </motion.div>
