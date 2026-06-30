@@ -170,3 +170,34 @@ export const adminResendEmail = createServerFn({ method: "POST" })
     });
     return { ok };
   });
+
+// ----- Multi-room booking management -----
+
+export const adminBookingRooms = createServerFn({ method: "POST" })
+  .inputValidator((d: { bookingId: string }) => d)
+  .handler(async ({ data }) => {
+    await assertUnlocked();
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data: rows, error } = await (supabaseAdmin as any)
+      .from("booking_rooms")
+      .select("*")
+      .eq("booking_id", data.bookingId)
+      .order("created_at", { ascending: true });
+    if (error) throw new Error(error.message);
+    return (rows ?? []) as Record<string, unknown>[];
+  });
+
+export const adminBookingRoomUpdate = createServerFn({ method: "POST" })
+  .inputValidator((d: { id: string; values: Record<string, unknown> }) => d)
+  .handler(async ({ data }) => {
+    await assertUnlocked();
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const allowed: Record<string, unknown> = {};
+    for (const k of ["room_number", "notes", "quantity", "adults", "children", "extra_bed"]) {
+      if (k in data.values) allowed[k] = data.values[k];
+    }
+    const { error } = await (supabaseAdmin as any)
+      .from("booking_rooms").update(allowed).eq("id", data.id);
+    if (error) throw new Error(error.message);
+    return { ok: true };
+  });
