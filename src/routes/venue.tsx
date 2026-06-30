@@ -68,7 +68,7 @@ function Venue() {
           <Reveal key={v.slug} delay={i * 0.1}>
             <div className="group flex h-full flex-col overflow-hidden rounded-2xl bg-card shadow-card transition hover:shadow-luxe">
               <div className="relative h-56 overflow-hidden">
-                <img src={v.image} alt={v.name} className="h-full w-full object-cover transition duration-700 group-hover:scale-110" loading="lazy" />
+                <AppImage src={v.image} alt={v.name} className="h-full w-full object-cover transition duration-700 group-hover:scale-110" loading="lazy" />
                 <span className={`absolute left-4 top-4 rounded-full px-3 py-1 text-xs uppercase tracking-wider text-ivory ${v.comingSoon ? "bg-brown" : "bg-gold"}`}>{v.badge}</span>
                 <span className="absolute right-4 top-4 flex items-center gap-1 rounded-full bg-ivory/90 px-3 py-1 text-xs text-charcoal"><Star className="h-3 w-3 fill-gold text-gold" />{v.rating}</span>
               </div>

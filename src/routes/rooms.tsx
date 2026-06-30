@@ -106,7 +106,7 @@ function Rooms() {
           <Reveal key={r.slug} delay={i * 0.05}>
             <div className={`grid grid-cols-1 overflow-hidden rounded-2xl bg-card shadow-luxe lg:grid-cols-2 ${i % 2 ? "lg:[direction:rtl]" : ""}`}>
               <div className="relative h-72 overflow-hidden lg:h-auto [direction:ltr]">
-                <img src={r.image} alt={r.name} className="h-full w-full object-cover transition duration-700 hover:scale-105" loading="lazy" />
+                <AppImage src={r.image} alt={r.name} className="h-full w-full object-cover transition duration-700 hover:scale-105" loading="lazy" />
                 <span className="absolute left-4 top-4 rounded-full bg-gold px-3 py-1 text-xs uppercase tracking-wider text-ivory">{r.badge}</span>
                 {avail && (
                   <span className={`absolute right-4 top-4 rounded-full px-3 py-1 text-xs font-medium uppercase tracking-wider ${soldOut ? "bg-charcoal/80 text-ivory" : "bg-emerald-600 text-ivory"}`}>

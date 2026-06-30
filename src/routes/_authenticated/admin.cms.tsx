@@ -1,3 +1,4 @@
+import { AppImage } from "@/components/site/AppImage";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Plus, Pencil, Trash2, Loader2, FileText } from "lucide-react";
@@ -89,7 +90,7 @@ function Cms() {
                 <td className="px-4 py-3 capitalize">{b.value?.type ?? "text"}</td>
                 <td className="px-4 py-3">
                   {b.value?.type === "image" && b.value?.value
-                    ? <img src={b.value.value} alt={b.key} className="h-12 w-16 rounded object-cover" />
+                    ? <AppImage src={b.value.value} alt={b.key} className="h-12 w-16 rounded object-cover" />
                     : <span className="line-clamp-1 max-w-xs text-xs text-muted-foreground">{b.value?.value || "—"}</span>}
                 </td>
                 <td className="px-4 py-3">
