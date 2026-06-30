@@ -70,7 +70,7 @@ export function NotificationBell() {
                   </div>
                 );
                 return n.link ? (
-                  <Link key={n.id} to={n.link} onClick={() => { markOne(n.id); setOpen(false); }} className="block">{inner}</Link>
+                  <Link key={n.id} to={n.link as any} onClick={() => { markOne(n.id); setOpen(false); }} className="block">{inner}</Link>
                 ) : (
                   <button key={n.id} onClick={() => markOne(n.id)} className="block w-full text-left">{inner}</button>
                 );
