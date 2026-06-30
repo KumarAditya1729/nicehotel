@@ -47,6 +47,69 @@ export type Database = {
         }
         Relationships: []
       }
+      booking_rooms: {
+        Row: {
+          adults: number
+          booking_id: string
+          children: number
+          created_at: string
+          extra_bed: boolean
+          id: string
+          notes: string | null
+          price: number
+          quantity: number
+          room_id: string | null
+          room_number: string | null
+          room_type: string
+          unit_price: number
+        }
+        Insert: {
+          adults?: number
+          booking_id: string
+          children?: number
+          created_at?: string
+          extra_bed?: boolean
+          id?: string
+          notes?: string | null
+          price?: number
+          quantity?: number
+          room_id?: string | null
+          room_number?: string | null
+          room_type: string
+          unit_price?: number
+        }
+        Update: {
+          adults?: number
+          booking_id?: string
+          children?: number
+          created_at?: string
+          extra_bed?: boolean
+          id?: string
+          notes?: string | null
+          price?: number
+          quantity?: number
+          room_id?: string | null
+          room_number?: string | null
+          room_type?: string
+          unit_price?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "booking_rooms_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "bookings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "booking_rooms_room_id_fkey"
+            columns: ["room_id"]
+            isOneToOne: false
+            referencedRelation: "rooms"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       bookings: {
         Row: {
           amount: number | null

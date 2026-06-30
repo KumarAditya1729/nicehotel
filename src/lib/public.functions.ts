@@ -26,38 +26,31 @@ export const getRooms = createServerFn({ method: "GET" }).handler(async () => {
 export const getRoomAvailability = createServerFn({ method: "GET" })
   .inputValidator((data?: { checkIn?: string; checkOut?: string }) => data ?? {})
   .handler(async ({ data }) => {
-    const supabase = await publicClient();
-
     const today = new Date().toISOString().slice(0, 10);
     const tomorrow = new Date(Date.now() + 86400000).toISOString().slice(0, 10);
     const checkIn = data?.checkIn || today;
     const checkOut = data?.checkOut || tomorrow;
 
-    const { data: rooms, error: rErr } = await supabase
+    // Use admin client for accurate counts (booking_rooms is staff-only under RLS).
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { bookedUnitsForRoom } = await import("@/lib/booking.server");
+
+    const { data: rooms, error: rErr } = await (supabaseAdmin as any)
       .from("rooms")
       .select("id,name,category,total_units")
       .eq("is_active", true);
     if (rErr) throw new Error(rErr.message);
 
-    // Bookings that overlap the requested range: check_in < checkOut AND check_out > checkIn
-    const { data: bookings, error: bErr } = await supabase
-      .from("bookings")
-      .select("room_id,room_type,status,check_in,check_out")
-      .neq("status", "cancelled")
-      .lt("check_in", checkOut)
-      .gt("check_out", checkIn);
-    if (bErr) throw new Error(bErr.message);
-
-    return (rooms ?? []).map((room: any) => {
-      const booked = (bookings ?? []).filter((b: any) => {
-        if (b.room_id) return b.room_id === room.id;
-        const t = (b.room_type ?? "").toLowerCase();
-        return t === (room.name ?? "").toLowerCase() || t === (room.category ?? "").toLowerCase();
-      }).length;
+    const result = [];
+    for (const room of rooms ?? []) {
       const total = Number(room.total_units) || 0;
-      const available = Math.max(0, total - booked);
-      return { roomId: room.id, name: room.name, category: room.category, total, booked, available };
-    });
+      const booked = await bookedUnitsForRoom(room.id, checkIn, checkOut);
+      result.push({
+        roomId: room.id, name: room.name, category: room.category,
+        total, booked, available: Math.max(0, total - booked),
+      });
+    }
+    return result;
   });
 
 export const getOffers = createServerFn({ method: "GET" }).handler(async () => {

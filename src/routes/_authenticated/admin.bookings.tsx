@@ -5,6 +5,7 @@ import { PageTitle } from "@/components/admin/AdminShell";
 import { ResourceManager, StatusBadge, type Field, type Column } from "@/components/admin/ResourceManager";
 import { setStatus } from "@/lib/admin/data";
 import { Button } from "@/components/ui/button";
+import { BookingRoomsCell } from "@/components/admin/BookingRooms";
 
 export const Route = createFileRoute("/_authenticated/admin/bookings")({ component: Bookings });
 
@@ -26,7 +27,7 @@ const fields: Field[] = [
 
 const columns: Column[] = [
   { name: "guest_name", label: "Guest", render: (r) => <div><p className="font-medium">{r.guest_name}</p><p className="text-xs text-muted-foreground">{r.guest_phone || r.guest_email || "—"}</p></div> },
-  { name: "room_type", label: "Room" },
+  { name: "room_type", label: "Rooms", render: (r) => <BookingRoomsCell bookingId={r.id} fallback={r.room_type} /> },
   { name: "check_in", label: "Dates", render: (r) => <span className="text-xs">{r.check_in || "—"} → {r.check_out || "—"}</span> },
   { name: "amount", label: "Amount", render: (r) => r.amount ? `₹${Number(r.amount).toLocaleString("en-IN")}` : "—" },
   { name: "payment_status", label: "Payment", render: (r) => <StatusBadge value={r.payment_status} /> },
