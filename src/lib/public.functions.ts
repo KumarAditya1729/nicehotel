@@ -11,12 +11,54 @@ export const getRooms = createServerFn({ method: "GET" }).handler(async () => {
   const supabase = await publicClient();
   const { data, error } = await supabase
     .from("rooms")
-    .select("id,name,room_number,category,description,price,weekend_price,capacity,floor,amenities,images,status,sort_order")
+    .select("id,name,room_number,category,description,price,weekend_price,capacity,floor,amenities,images,status,sort_order,total_units")
     .eq("is_active", true)
     .order("sort_order", { ascending: true });
   if (error) throw new Error(error.message);
   return data ?? [];
 });
+
+/**
+ * Live room availability. For each active room type it returns how many units
+ * are free for the given date range, derived from real bookings that overlap
+ * those dates (cancelled bookings are ignored). Defaults to tonight's stay.
+ */
+export const getRoomAvailability = createServerFn({ method: "GET" })
+  .inputValidator((data?: { checkIn?: string; checkOut?: string }) => data ?? {})
+  .handler(async ({ data }) => {
+    const supabase = await publicClient();
+
+    const today = new Date().toISOString().slice(0, 10);
+    const tomorrow = new Date(Date.now() + 86400000).toISOString().slice(0, 10);
+    const checkIn = data?.checkIn || today;
+    const checkOut = data?.checkOut || tomorrow;
+
+    const { data: rooms, error: rErr } = await supabase
+      .from("rooms")
+      .select("id,name,category,total_units")
+      .eq("is_active", true);
+    if (rErr) throw new Error(rErr.message);
+
+    // Bookings that overlap the requested range: check_in < checkOut AND check_out > checkIn
+    const { data: bookings, error: bErr } = await supabase
+      .from("bookings")
+      .select("room_id,room_type,status,check_in,check_out")
+      .neq("status", "cancelled")
+      .lt("check_in", checkOut)
+      .gt("check_out", checkIn);
+    if (bErr) throw new Error(bErr.message);
+
+    return (rooms ?? []).map((room: any) => {
+      const booked = (bookings ?? []).filter((b: any) => {
+        if (b.room_id) return b.room_id === room.id;
+        const t = (b.room_type ?? "").toLowerCase();
+        return t === (room.name ?? "").toLowerCase() || t === (room.category ?? "").toLowerCase();
+      }).length;
+      const total = Number(room.total_units) || 0;
+      const available = Math.max(0, total - booked);
+      return { roomId: room.id, name: room.name, category: room.category, total, booked, available };
+    });
+  });
 
 export const getOffers = createServerFn({ method: "GET" }).handler(async () => {
   const supabase = await publicClient();
