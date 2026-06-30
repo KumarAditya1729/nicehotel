@@ -117,7 +117,7 @@ export const venues = [
     capacity: "10 Guests",
     size: "200 sqm",
     floor: "1st Floor",
-    image: site.images.meeting,
+    image: site.images.meetingRoom,
     comingSoon: false,
     description:
       "Comfortable meeting room with essential amenities for small gatherings, training, and discussions.",
