@@ -3,6 +3,7 @@ import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
 import {
   LayoutDashboard, CalendarCheck, BedDouble, UtensilsCrossed, Tag, MessageSquare,
   Star, Images, Users, Settings, ScrollText, LogOut, Menu as MenuIcon, X, Hotel, Search,
+  ConciergeBell, PartyPopper,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { adminLogout } from "@/lib/admin.functions";
@@ -17,6 +18,8 @@ const NAV: { section: string; items: NavItem[] }[] = [
   { section: "Operations", items: [
     { to: "/admin/bookings", label: "Bookings", icon: CalendarCheck },
     { to: "/admin/rooms", label: "Rooms", icon: BedDouble },
+    { to: "/admin/services", label: "Services", icon: ConciergeBell },
+    { to: "/admin/events", label: "Venue & Events", icon: PartyPopper },
     { to: "/admin/enquiries", label: "Enquiries", icon: MessageSquare },
   ]},
   { section: "Restaurant", items: [
