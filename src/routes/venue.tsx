@@ -5,6 +5,7 @@ import { Reveal } from "@/components/site/Reveal";
 import { Icon } from "@/components/site/Icon";
 import { PageHeader, SectionHeading, CtaBand } from "@/components/site/ui";
 import { useBooking } from "@/components/site/booking";
+import { breadcrumbLd } from "@/lib/seo";
 
 export const Route = createFileRoute("/venue")({
   head: () => ({
@@ -14,8 +15,10 @@ export const Route = createFileRoute("/venue")({
       { property: "og:title", content: "Party & Event Halls" },
       { property: "og:url", content: "/venue" },
       { property: "og:image", content: site.images.hall },
+      { name: "twitter:image", content: site.images.hall },
     ],
     links: [{ rel: "canonical", href: "/venue" }],
+    scripts: [breadcrumbLd([{ name: "Home", path: "/" }, { name: "Venue", path: "/venue" }])],
   }),
   component: Venue,
 });

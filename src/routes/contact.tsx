@@ -7,6 +7,7 @@ import { sendContactEmail } from "@/lib/email.functions";
 import { site } from "@/data/content";
 import { Reveal } from "@/components/site/Reveal";
 import { PageHeader } from "@/components/site/ui";
+import { breadcrumbLd } from "@/lib/seo";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -16,8 +17,10 @@ export const Route = createFileRoute("/contact")({
       { property: "og:title", content: "Contact Nice Hotel And Restaurant" },
       { property: "og:url", content: "/contact" },
       { property: "og:image", content: site.images.dining },
+      { name: "twitter:image", content: site.images.dining },
     ],
     links: [{ rel: "canonical", href: "/contact" }],
+    scripts: [breadcrumbLd([{ name: "Home", path: "/" }, { name: "Contact", path: "/contact" }])],
   }),
   component: Contact,
 });

@@ -6,6 +6,7 @@ import { Icon } from "@/components/site/Icon";
 import { PageHeader, SectionHeading, CtaBand } from "@/components/site/ui";
 import { useBooking } from "@/components/site/booking";
 import { TiltCard } from "@/components/site/TiltCard";
+import { breadcrumbLd } from "@/lib/seo";
 
 export const Route = createFileRoute("/rooms")({
   head: () => ({
@@ -15,8 +16,10 @@ export const Route = createFileRoute("/rooms")({
       { property: "og:title", content: "Luxury Rooms & Suites" },
       { property: "og:url", content: "/rooms" },
       { property: "og:image", content: site.images.executive },
+      { name: "twitter:image", content: site.images.executive },
     ],
     links: [{ rel: "canonical", href: "/rooms" }],
+    scripts: [breadcrumbLd([{ name: "Home", path: "/" }, { name: "Rooms", path: "/rooms" }])],
   }),
   component: Rooms,
 });

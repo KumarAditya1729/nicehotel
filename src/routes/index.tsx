@@ -9,6 +9,7 @@ import { Icon } from "@/components/site/Icon";
 import { LuxeButton, SectionHeading, CtaBand } from "@/components/site/ui";
 import { TiltCard } from "@/components/site/TiltCard";
 import { useBooking } from "@/components/site/booking";
+import { breadcrumbLd } from "@/lib/seo";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -18,8 +19,12 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "Nice Hotel And Restaurant" },
       { property: "og:description", content: "Where luxury meets comfort — world-class hospitality in Mansa, Punjab." },
       { property: "og:url", content: "/" },
+      { property: "og:type", content: "website" },
+      { property: "og:image", content: site.images.executive },
+      { name: "twitter:image", content: site.images.executive },
     ],
     links: [{ rel: "canonical", href: "/" }],
+    scripts: [breadcrumbLd([{ name: "Home", path: "/" }])],
   }),
   component: Home,
 });

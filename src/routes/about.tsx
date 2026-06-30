@@ -7,6 +7,7 @@ import {
 import { Reveal } from "@/components/site/Reveal";
 import { Icon } from "@/components/site/Icon";
 import { PageHeader, SectionHeading, CtaBand, LuxeButton } from "@/components/site/ui";
+import { breadcrumbLd } from "@/lib/seo";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -16,8 +17,10 @@ export const Route = createFileRoute("/about")({
       { property: "og:title", content: "About Nice Hotel And Restaurant" },
       { property: "og:url", content: "/about" },
       { property: "og:image", content: site.images.executive },
+      { name: "twitter:image", content: site.images.executive },
     ],
     links: [{ rel: "canonical", href: "/about" }],
+    scripts: [breadcrumbLd([{ name: "Home", path: "/" }, { name: "About", path: "/about" }])],
   }),
   component: About,
 });

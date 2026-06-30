@@ -4,6 +4,7 @@ import { site, services, offers } from "@/data/content";
 import { Reveal } from "@/components/site/Reveal";
 import { Icon } from "@/components/site/Icon";
 import { PageHeader, SectionHeading, CtaBand } from "@/components/site/ui";
+import { breadcrumbLd } from "@/lib/seo";
 
 export const Route = createFileRoute("/services")({
   head: () => ({
@@ -13,8 +14,10 @@ export const Route = createFileRoute("/services")({
       { property: "og:title", content: "Services & Amenities" },
       { property: "og:url", content: "/services" },
       { property: "og:image", content: site.images.meeting },
+      { name: "twitter:image", content: site.images.meeting },
     ],
     links: [{ rel: "canonical", href: "/services" }],
+    scripts: [breadcrumbLd([{ name: "Home", path: "/" }, { name: "Services", path: "/services" }])],
   }),
   component: Services,
 });

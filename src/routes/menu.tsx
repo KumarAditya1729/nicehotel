@@ -7,6 +7,7 @@ import { site, type MenuCategory } from "@/data/content";
 import { Reveal } from "@/components/site/Reveal";
 import { PageHeader, CtaBand } from "@/components/site/ui";
 import { TiltCard } from "@/components/site/TiltCard";
+import { breadcrumbLd } from "@/lib/seo";
 
 const categories = menuData as MenuCategory[];
 
@@ -25,9 +26,12 @@ export const Route = createFileRoute("/menu")({
       { property: "og:title", content: "Our Restaurant Menu" },
       { property: "og:url", content: "/menu" },
       { property: "og:image", content: site.images.dining },
+      { name: "twitter:image", content: site.images.dining },
     ],
     links: [{ rel: "canonical", href: "/menu" }],
-    scripts: [{
+    scripts: [
+      breadcrumbLd([{ name: "Home", path: "/" }, { name: "Menu", path: "/menu" }]),
+      {
       type: "application/ld+json",
       children: JSON.stringify({
         "@context": "https://schema.org", "@type": "Menu", name: "Nice Hotel And Restaurant Menu",
@@ -36,7 +40,8 @@ export const Route = createFileRoute("/menu")({
           hasMenuItem: c.items.map((i) => ({ "@type": "MenuItem", name: i.name, offers: { "@type": "Offer", price: i.price.replace(/[^\d|]/g, ""), priceCurrency: "INR" } })),
         })),
       }),
-    }],
+      },
+    ],
   }),
   component: Menu,
 });
