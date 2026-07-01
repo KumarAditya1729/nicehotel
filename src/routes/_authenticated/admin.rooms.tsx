@@ -41,7 +41,7 @@ const columns: Column[] = [
   {
     name: "name",
     label: "Room",
-    render: (r) => (
+    render: (r: any) => (
       <div>
         <p className="font-medium">{r.name}</p>
         <p className="text-xs text-muted-foreground">
@@ -53,12 +53,12 @@ const columns: Column[] = [
   {
     name: "price",
     label: "Price",
-    render: (r) => (r.price ? `₹${Number(r.price).toLocaleString("en-IN")}` : "—"),
+    render: (r: any) => (r.price ? `₹${Number(r.price).toLocaleString("en-IN")}` : "—"),
   },
-  { name: "total_units", label: "Units", render: (r) => r.total_units || 1 },
+  { name: "total_units", label: "Units", render: (r: any) => r.total_units || 1 },
   { name: "capacity", label: "Cap." },
-  { name: "status", label: "Status", render: (r) => <StatusBadge value={r.status} /> },
-  { name: "is_active", label: "Active", render: (r) => (r.is_active ? "Yes" : "No") },
+  { name: "status", label: "Status", render: (r: any) => <StatusBadge value={r.status} /> },
+  { name: "is_active", label: "Active", render: (r: any) => (r.is_active ? "Yes" : "No") },
 ];
 
 function Rooms() {
