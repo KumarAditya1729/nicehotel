@@ -5,8 +5,8 @@ import { createHmac, timingSafeEqual } from "node:crypto";
 const itemSchema = z.object({
   roomId: z.string().uuid(),
   quantity: z.number().int().min(1).max(20).default(1),
-  adults: z.number().int().min(1).max(20).default(1),
-  children: z.number().int().min(0).max(20).default(0),
+  adults: z.number().int().min(1).max(200).default(1),
+  children: z.number().int().min(0).max(200).default(0),
   extraBed: z.boolean().default(false),
   notes: z.string().max(2000).optional(),
 });
