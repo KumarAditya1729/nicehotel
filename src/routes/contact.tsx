@@ -39,7 +39,7 @@ const details = (s = site) => [
     icon: MapPin,
     label: "Address",
     value: s.address,
-    href: "https://www.google.com/maps?q=Mansa,Punjab,151505",
+    href: "https://www.google.com/maps/place/Nice+Hotel+and+Restaurant/@29.9869986,75.3965777,17z/data=!3m1!4b1!4m6!3m5!1s0x39111ed233e52a9d:0x4b9e1af1e64ace0a!8m2!3d29.9869986!4d75.3965777!16s%2Fg%2F11b7tz5qzr?entry=ttu&g_ep=EgoyMDI2MDYyOC4wIKXMDSoASAFQAw%3D%3D",
   },
   { icon: Phone, label: "Phone", value: s.phone, href: `tel:${s.phoneRaw}` },
   { icon: Mail, label: "Email", value: s.email, href: `mailto:${s.email}` },
@@ -119,7 +119,7 @@ function Contact() {
           <div className="mt-8 overflow-hidden rounded-2xl shadow-luxe">
             <iframe
               title="Map"
-              src="https://www.google.com/maps?q=Mansa,Punjab,151505&output=embed"
+              src="https://www.google.com/maps?q=Nice+Hotel+and+Restaurant,29.9869986,75.3965777&output=embed"
               className="h-72 w-full border-0"
               loading="lazy"
             />
