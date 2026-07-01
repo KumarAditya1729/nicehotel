@@ -241,7 +241,7 @@ function About() {
           <Reveal delay={0.15} className="overflow-hidden rounded-2xl shadow-luxe">
             <iframe
               title="Map of Nice Hotel And Restaurant, Mansa"
-              src="https://www.google.com/maps?q=Nice+Hotel+and+Restaurant,+Mansa,+Punjab&output=embed"
+              src="https://www.google.com/maps?q=Nice+Hotel+and+Restaurant,+Mansa,+Punjab&z=16&output=embed"
               className="h-80 w-full border-0"
               loading="lazy"
             />
