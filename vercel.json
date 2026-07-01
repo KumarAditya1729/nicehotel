@@ -1,6 +1,10 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "framework": null,
-  "buildCommand": "bun run vercel-build",
-  "installCommand": "bun install --no-frozen-lockfile --registry=https://registry.npmjs.org"
+  "buildCommand": "bun run build",
+  "outputDirectory": "dist/client",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/api/index"
+    }
+  ]
 }
