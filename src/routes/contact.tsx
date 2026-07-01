@@ -119,7 +119,7 @@ function Contact() {
           <div className="mt-8 overflow-hidden rounded-2xl shadow-luxe">
             <iframe
               title="Map"
-              src="https://www.google.com/maps?q=Nice+Hotel+and+Restaurant,29.9869986,75.3965777&output=embed"
+              src="https://www.google.com/maps?q=Nice+Hotel+and+Restaurant,+Mansa,+Punjab&output=embed"
               className="h-72 w-full border-0"
               loading="lazy"
             />

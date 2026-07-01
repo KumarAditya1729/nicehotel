@@ -171,7 +171,7 @@ export async function computeMultiQuote(items: RoomItemInput[], checkIn: string,
     };
   });
   const subtotal = lines.reduce((s, l) => s + l.lineTotal, 0);
-  const taxRate = 0.12; // 12% GST
+  const taxRate = 0.05; // 5% GST
   const taxes = Math.round(subtotal * taxRate);
   const grandTotal = subtotal + taxes;
   return { nights, lines, subtotal, taxRate, taxes, grandTotal };

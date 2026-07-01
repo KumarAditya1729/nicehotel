@@ -833,7 +833,7 @@ function BookPage() {
                     <span>{inr(priced.subtotal)}</span>
                   </div>
                   <div className="flex justify-between text-muted-foreground">
-                    <span>GST (12%)</span>
+                    <span>GST (5%)</span>
                     <span>{inr(priced.taxes)}</span>
                   </div>
                   <div className="flex justify-between font-display text-lg text-charcoal">
