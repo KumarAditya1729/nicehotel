@@ -20,7 +20,8 @@ const fields: Field[] = [
   },
   { name: "price", label: "Price / night (₹)", type: "number" },
   { name: "weekend_price", label: "Weekend Price (₹)", type: "number" },
-  { name: "capacity", label: "Capacity", type: "number", default: 2 },
+  { name: "capacity", label: "Capacity (Guests)", type: "number", default: 2 },
+  { name: "total_units", label: "Total Rooms of this type", type: "number", default: 1 },
   { name: "floor", label: "Floor", type: "text" },
   {
     name: "status",
@@ -54,6 +55,7 @@ const columns: Column[] = [
     label: "Price",
     render: (r) => (r.price ? `₹${Number(r.price).toLocaleString("en-IN")}` : "—"),
   },
+  { name: "total_units", label: "Units", render: (r) => r.total_units || 1 },
   { name: "capacity", label: "Cap." },
   { name: "status", label: "Status", render: (r) => <StatusBadge value={r.status} /> },
   { name: "is_active", label: "Active", render: (r) => (r.is_active ? "Yes" : "No") },
