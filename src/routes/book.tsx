@@ -389,11 +389,11 @@ function BookPage() {
                           </label>
                           <label className="text-xs text-muted-foreground">
                             <span className="mb-1.5 block">Adults</span>
-                            <input type="number" min={1} max={room?.capacity ?? 10} value={l.adults} onChange={(e) => updateLine(l.key, { adults: Math.max(1, Number(e.target.value)) })} className={fieldCls} />
+                            <input type="number" min={1} value={l.adults} onChange={(e) => updateLine(l.key, { adults: Math.max(1, Number(e.target.value)) })} className={fieldCls} />
                           </label>
                           <label className="text-xs text-muted-foreground">
                             <span className="mb-1.5 block">Children</span>
-                            <input type="number" min={0} max={10} value={l.children} onChange={(e) => updateLine(l.key, { children: Math.max(0, Number(e.target.value)) })} className={fieldCls} />
+                            <input type="number" min={0} value={l.children} onChange={(e) => updateLine(l.key, { children: Math.max(0, Number(e.target.value)) })} className={fieldCls} />
                           </label>
                           <label className="flex items-center gap-2 text-xs text-muted-foreground">
                             <input type="checkbox" checked={l.extraBed} onChange={(e) => updateLine(l.key, { extraBed: e.target.checked })} className="h-4 w-4 accent-gold" />
