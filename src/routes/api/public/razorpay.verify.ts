@@ -73,19 +73,27 @@ export const Route = createFileRoute("/api/public/razorpay/verify")({
           return Response.json({ ok: true, bookingId: booking.id });
         }
 
-        // Mark as confirmed
-        const { error: updErr } = await supabaseAdmin
+        // Mark as confirmed (Concurrency safe)
+        const { data: updated, error: updErr } = await supabaseAdmin
           .from("bookings")
           .update({
             status: "confirmed",
             payment_status: "paid",
             razorpay_payment_id: d.razorpay_payment_id,
           })
-          .eq("id", booking.id);
+          .eq("id", booking.id)
+          .eq("status", "pending")
+          .select("id")
+          .maybeSingle();
 
         if (updErr) {
           console.error("Booking update error", updErr);
           return Response.json({ error: "Could not confirm booking" }, { status: 500 });
+        }
+
+        if (!updated) {
+          // Already confirmed by webhook
+          return Response.json({ ok: true, bookingId: booking.id });
         }
 
         // Send confirmation emails (best-effort)
