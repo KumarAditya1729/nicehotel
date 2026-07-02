@@ -141,7 +141,10 @@ export async function getRoomsByIds(ids: string[]): Promise<Record<string, RoomR
     .select("id,name,price,weekend_price,capacity,images,category,total_units")
     .in("id", unique)
     .eq("is_active", true);
-  if (error) throw new Error("Could not load rooms");
+  if (error) {
+    console.error("getRoomsByIds error:", error);
+    throw new Error("Could not load rooms: " + error.message);
+  }
   const map: Record<string, RoomRow> = {};
   for (const r of data ?? []) map[r.id] = r as RoomRow;
   for (const id of unique) if (!map[id]) throw new Error("Room not found");
