@@ -31,6 +31,7 @@ import { Route as AuthenticatedAdminEnquiriesRouteImport } from './routes/_authe
 import { Route as AuthenticatedAdminEmailsRouteImport } from './routes/_authenticated/admin.emails'
 import { Route as AuthenticatedAdminCmsRouteImport } from './routes/_authenticated/admin.cms'
 import { Route as AuthenticatedAdminBookingsRouteImport } from './routes/_authenticated/admin.bookings'
+import { Route as ApiPublicRazorpayWebhookRouteImport } from './routes/api/public/razorpay.webhook'
 import { Route as ApiPublicRazorpayVerifyRouteImport } from './routes/api/public/razorpay.verify'
 import { Route as ApiPublicRazorpayOrderRouteImport } from './routes/api/public/razorpay.order'
 
@@ -149,6 +150,12 @@ const AuthenticatedAdminBookingsRoute =
     path: '/bookings',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const ApiPublicRazorpayWebhookRoute =
+  ApiPublicRazorpayWebhookRouteImport.update({
+    id: '/api/public/razorpay/webhook',
+    path: '/api/public/razorpay/webhook',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicRazorpayVerifyRoute = ApiPublicRazorpayVerifyRouteImport.update({
   id: '/api/public/razorpay/verify',
   path: '/api/public/razorpay/verify',
@@ -184,6 +191,7 @@ export interface FileRoutesByFullPath {
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/api/public/razorpay/order': typeof ApiPublicRazorpayOrderRoute
   '/api/public/razorpay/verify': typeof ApiPublicRazorpayVerifyRoute
+  '/api/public/razorpay/webhook': typeof ApiPublicRazorpayWebhookRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -208,6 +216,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/api/public/razorpay/order': typeof ApiPublicRazorpayOrderRoute
   '/api/public/razorpay/verify': typeof ApiPublicRazorpayVerifyRoute
+  '/api/public/razorpay/webhook': typeof ApiPublicRazorpayWebhookRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -235,6 +244,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/api/public/razorpay/order': typeof ApiPublicRazorpayOrderRoute
   '/api/public/razorpay/verify': typeof ApiPublicRazorpayVerifyRoute
+  '/api/public/razorpay/webhook': typeof ApiPublicRazorpayWebhookRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -262,6 +272,7 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/api/public/razorpay/order'
     | '/api/public/razorpay/verify'
+    | '/api/public/razorpay/webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -286,6 +297,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/api/public/razorpay/order'
     | '/api/public/razorpay/verify'
+    | '/api/public/razorpay/webhook'
   id:
     | '__root__'
     | '/'
@@ -312,6 +324,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/'
     | '/api/public/razorpay/order'
     | '/api/public/razorpay/verify'
+    | '/api/public/razorpay/webhook'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -328,6 +341,7 @@ export interface RootRouteChildren {
   VenueRoute: typeof VenueRoute
   ApiPublicRazorpayOrderRoute: typeof ApiPublicRazorpayOrderRoute
   ApiPublicRazorpayVerifyRoute: typeof ApiPublicRazorpayVerifyRoute
+  ApiPublicRazorpayWebhookRoute: typeof ApiPublicRazorpayWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -486,6 +500,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminBookingsRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/api/public/razorpay/webhook': {
+      id: '/api/public/razorpay/webhook'
+      path: '/api/public/razorpay/webhook'
+      fullPath: '/api/public/razorpay/webhook'
+      preLoaderRoute: typeof ApiPublicRazorpayWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/razorpay/verify': {
       id: '/api/public/razorpay/verify'
       path: '/api/public/razorpay/verify'
@@ -557,6 +578,7 @@ const rootRouteChildren: RootRouteChildren = {
   VenueRoute: VenueRoute,
   ApiPublicRazorpayOrderRoute: ApiPublicRazorpayOrderRoute,
   ApiPublicRazorpayVerifyRoute: ApiPublicRazorpayVerifyRoute,
+  ApiPublicRazorpayWebhookRoute: ApiPublicRazorpayWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

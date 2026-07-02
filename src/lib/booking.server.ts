@@ -46,7 +46,7 @@ export async function assertAvailable(roomId: string, checkIn: string, checkOut:
     .from("bookings")
     .select("id")
     .eq("room_id", roomId)
-    .neq("status", "cancelled")
+    .in("status", ["confirmed", "checked_in"])
     .lt("check_in", checkOut)
     .gt("check_out", checkIn)
     .limit(1);
@@ -103,7 +103,7 @@ export async function bookedUnitsForRoom(
     .from("booking_rooms")
     .select("quantity, bookings!inner(status, check_in, check_out)")
     .eq("room_id", roomId)
-    .neq("bookings.status", "cancelled")
+    .in("bookings.status", ["confirmed", "checked_in"])
     .lt("bookings.check_in", checkOut)
     .gt("bookings.check_out", checkIn);
   let units = 0;
@@ -115,7 +115,7 @@ export async function bookedUnitsForRoom(
     .from("bookings")
     .select("id")
     .eq("room_id", roomId)
-    .neq("status", "cancelled")
+    .in("status", ["confirmed", "checked_in"])
     .lt("check_in", checkOut)
     .gt("check_out", checkIn);
   if (legacy && legacy.length) {

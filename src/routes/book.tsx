@@ -309,10 +309,24 @@ function BookPage() {
         extraBed: l.extraBed,
         notes: l.notes || undefined,
       }));
+      const { data: sess } = await supabase.auth.getSession();
+      const accessToken = sess.session?.access_token;
       const orderRes = await fetch("/api/public/razorpay/order", {
         method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ items, checkIn, checkOut }),
+        headers: {
+          "content-type": "application/json",
+          ...(accessToken ? { authorization: `Bearer ${accessToken}` } : {}),
+        },
+        body: JSON.stringify({
+          items,
+          checkIn,
+          checkOut,
+          guests: totalGuests,
+          guestName: name,
+          guestEmail: user.email,
+          guestPhone: phone,
+          specialRequests: requests || undefined,
+        }),
       });
       const order = await orderRes.json();
       if (!orderRes.ok) throw new Error(order.error || "Could not start payment");

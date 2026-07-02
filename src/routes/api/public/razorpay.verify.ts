@@ -55,109 +55,37 @@ export const Route = createFileRoute("/api/public/razorpay/verify")({
           return Response.json({ error: "Payment verification failed" }, { status: 400 });
         }
 
-        const { computeMultiQuote, assertMultiAvailable, findExistingBooking } =
-          await import("@/lib/booking.server");
         const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-        const items =
-          d.items ??
-          (d.roomId
-            ? [{ roomId: d.roomId, quantity: 1, adults: d.guests, children: 0, extraBed: false }]
-            : null);
-        if (!items) return Response.json({ error: "No rooms selected" }, { status: 400 });
 
-        // Idempotency: if this payment already produced a booking, return it.
-        try {
-          const existing = await findExistingBooking(d.razorpay_order_id, d.razorpay_payment_id);
-          if (existing) return Response.json({ ok: true, bookingId: existing });
-        } catch {
-          /* non-fatal: continue to insert */
-        }
-
-        // Resolve the authenticated user from the bearer token (never trust client userId).
-        let userId: string | null = null;
-        const authHeader = request.headers.get("authorization");
-        const token = authHeader?.toLowerCase().startsWith("bearer ") ? authHeader.slice(7) : null;
-        if (token) {
-          try {
-            const { data: u } = await supabaseAdmin.auth.getUser(token);
-            userId = u?.user?.id ?? null;
-          } catch {
-            userId = null;
-          }
-        }
-
-        let quote;
-        try {
-          quote = await computeMultiQuote(items, d.checkIn, d.checkOut);
-        } catch (e: unknown) {
-          return Response.json(
-            { error: e instanceof Error ? e.message : "Quote failed" },
-            { status: 400 },
-          );
-        }
-
-        try {
-          await assertMultiAvailable(items, d.checkIn, d.checkOut);
-        } catch (e: unknown) {
-          return Response.json(
-            {
-              error: e instanceof Error ? e.message : "Not available",
-              paymentId: d.razorpay_payment_id,
-            },
-            { status: 409 },
-          );
-        }
-
-        const totalGuests =
-          quote.lines.reduce((s, l) => s + (l.adults + l.children) * l.quantity, 0) || d.guests;
-        const first = quote.lines[0];
-        const roomSummary = quote.lines.map((l) => `${l.room.name} ×${l.quantity}`).join(", ");
-
-        const { data: booking, error } = await supabaseAdmin
+        // Find the pending booking
+        const { data: booking, error: bErr } = await supabaseAdmin
           .from("bookings")
-          .insert({
-            user_id: userId,
-            guest_name: d.guestName,
-            guest_email: d.guestEmail,
-            guest_phone: d.guestPhone,
-            room_id: first.room.id,
-            room_type: quote.lines.length === 1 ? first.room.name : roomSummary,
-            check_in: d.checkIn,
-            check_out: d.checkOut,
-            nights: quote.nights,
-            guests: totalGuests,
-            amount: quote.grandTotal,
+          .select("*, booking_rooms(*)")
+          .eq("razorpay_order_id", d.razorpay_order_id)
+          .single();
+
+        if (bErr || !booking) {
+          return Response.json({ error: "Booking order not found" }, { status: 404 });
+        }
+
+        // Idempotency
+        if (booking.status === "confirmed") {
+          return Response.json({ ok: true, bookingId: booking.id });
+        }
+
+        // Mark as confirmed
+        const { error: updErr } = await supabaseAdmin
+          .from("bookings")
+          .update({
             status: "confirmed",
             payment_status: "paid",
-            source: "website",
-            special_requests: d.specialRequests ?? null,
-            razorpay_order_id: d.razorpay_order_id,
             razorpay_payment_id: d.razorpay_payment_id,
           })
-          .select("id")
-          .single();
-        if (error) {
-          console.error("Booking insert error", error);
-          return Response.json({ error: "Could not save booking" }, { status: 500 });
-        }
+          .eq("id", booking.id);
 
-        // Insert child room lines
-        try {
-          const rows = quote.lines.map((l) => ({
-            booking_id: booking.id,
-            room_id: l.room.id,
-            room_type: l.room.name,
-            quantity: l.quantity,
-            adults: l.adults,
-            children: l.children,
-            extra_bed: l.extraBed,
-            unit_price: l.unitPrice,
-            price: l.lineTotal,
-            notes: l.notes,
-          }));
-          await supabaseAdmin.from("booking_rooms").insert(rows);
-        } catch (e) {
-          console.error("booking_rooms insert error", e);
+        if (updErr) {
+          console.error("Booking update error", updErr);
+          return Response.json({ error: "Could not confirm booking" }, { status: 500 });
         }
 
         // Send confirmation emails (best-effort)
@@ -165,43 +93,50 @@ export const Route = createFileRoute("/api/public/razorpay/verify")({
           const { notify } = await import("@/lib/notifications.server");
           await notify({
             type: "booking",
-            title: `New paid booking — ${d.guestName}`,
-            body: `${roomSummary} · ${d.checkIn} → ${d.checkOut} · ₹${quote.grandTotal.toLocaleString("en-IN")}`,
+            title: `New paid booking — ${booking.guest_name}`,
+            body: `${booking.room_type} · ${booking.check_in} → ${booking.check_out} · ₹${Number(booking.amount).toLocaleString("en-IN")}`,
             link: "/admin/bookings",
           });
         } catch (e) {
           console.error("notify error", e);
         }
+
         try {
           const { sendEmails, adminEmail } = await import("@/lib/email.server");
           const t = await import("@/lib/email-templates");
-          const roomsBreakdown = quote.lines
+          const roomsBreakdown = (booking.booking_rooms || [])
             .map(
-              (l) =>
-                `${l.room.name} ×${l.quantity} (${l.adults} adult${l.adults > 1 ? "s" : ""}${l.children ? `, ${l.children} child` : ""}${l.extraBed ? ", extra bed" : ""}) — ₹${l.lineTotal.toLocaleString("en-IN")}`,
+              (l: any) =>
+                `${l.room_type} ×${l.quantity} (${l.adults} adult${l.adults > 1 ? "s" : ""}${l.children ? `, ${l.children} child` : ""}${l.extra_bed ? ", extra bed" : ""}) — ₹${Number(l.price).toLocaleString("en-IN")}`,
             )
             .join("; ");
+
+          const taxRate = 0.05;
+          const grandTotal = Number(booking.amount);
+          const subtotal = Math.round(grandTotal / (1 + taxRate));
+          const taxes = grandTotal - subtotal;
+
           const data = {
-            name: d.guestName,
-            email: d.guestEmail,
-            phone: d.guestPhone,
-            checkIn: d.checkIn,
-            checkOut: d.checkOut,
-            guests: String(totalGuests),
-            roomType: quote.lines.length === 1 ? first.room.name : roomSummary,
-            requests: `${d.specialRequests ?? ""}${d.specialRequests ? " · " : ""}Rooms: ${roomsBreakdown} · Subtotal ₹${quote.subtotal.toLocaleString("en-IN")} + GST ₹${quote.taxes.toLocaleString("en-IN")} = ₹${quote.grandTotal.toLocaleString("en-IN")} (${quote.nights} night${quote.nights > 1 ? "s" : ""}) · Payment ID ${d.razorpay_payment_id}`,
+            name: booking.guest_name,
+            email: booking.guest_email,
+            phone: booking.guest_phone,
+            checkIn: booking.check_in,
+            checkOut: booking.check_out,
+            guests: String(booking.guests),
+            roomType: booking.room_type,
+            requests: `${booking.special_requests ?? ""}${booking.special_requests ? " · " : ""}Rooms: ${roomsBreakdown} · Subtotal ₹${subtotal.toLocaleString("en-IN")} + GST ₹${taxes.toLocaleString("en-IN")} = ₹${grandTotal.toLocaleString("en-IN")} (${booking.nights} night${booking.nights > 1 ? "s" : ""}) · Payment ID ${d.razorpay_payment_id}`,
           };
           await sendEmails([
             {
-              to: d.guestEmail,
+              to: booking.guest_email,
               subject: "Booking confirmed — Nice Hotel & Restaurant",
               html: t.bookingGuestEmail(data),
             },
             {
               to: adminEmail(),
-              subject: `New paid booking: ${d.guestName}`,
+              subject: `New paid booking: ${booking.guest_name}`,
               html: t.bookingAdminEmail(data),
-              reply: d.guestEmail,
+              reply: booking.guest_email,
             },
           ]);
         } catch (e) {

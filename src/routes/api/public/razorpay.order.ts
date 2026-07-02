@@ -16,6 +16,11 @@ const schema = z.object({
   roomId: z.string().uuid().optional(),
   checkIn: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
   checkOut: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+  guests: z.number().int().min(1).max(60),
+  guestName: z.string().min(1).max(120),
+  guestEmail: z.string().email(),
+  guestPhone: z.string().min(3).max(40),
+  specialRequests: z.string().max(2000).optional(),
 });
 
 export const Route = createFileRoute("/api/public/razorpay/order")({
@@ -36,15 +41,30 @@ export const Route = createFileRoute("/api/public/razorpay/order")({
         }
         const parsed = schema.safeParse(body);
         if (!parsed.success) return Response.json({ error: "Invalid input" }, { status: 400 });
-        const { checkIn, checkOut } = parsed.data;
+        const d = parsed.data;
+        const { checkIn, checkOut } = d;
         const items =
-          parsed.data.items ??
-          (parsed.data.roomId
-            ? [{ roomId: parsed.data.roomId, quantity: 1, adults: 1, children: 0, extraBed: false }]
+          d.items ??
+          (d.roomId
+            ? [{ roomId: d.roomId, quantity: 1, adults: 1, children: 0, extraBed: false }]
             : null);
         if (!items) return Response.json({ error: "No rooms selected" }, { status: 400 });
 
         const { computeMultiQuote, assertMultiAvailable } = await import("@/lib/booking.server");
+        const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+
+        // Resolve user
+        let userId: string | null = null;
+        const authHeader = request.headers.get("authorization");
+        const token = authHeader?.toLowerCase().startsWith("bearer ") ? authHeader.slice(7) : null;
+        if (token) {
+          try {
+            const { data: u } = await supabaseAdmin.auth.getUser(token);
+            userId = u?.user?.id ?? null;
+          } catch {
+            userId = null;
+          }
+        }
         let quote;
         try {
           quote = await computeMultiQuote(items, checkIn, checkOut);
@@ -82,6 +102,55 @@ export const Route = createFileRoute("/api/public/razorpay/order")({
           return Response.json({ error: "Could not create payment order" }, { status: 502 });
         }
         const order = await res.json();
+
+        // Create pending booking in DB
+        const totalGuests = d.guests;
+        const first = quote.lines[0];
+        const roomSummary = quote.lines.map((l) => `${l.room.name} ×${l.quantity}`).join(", ");
+
+        const { data: booking, error } = await supabaseAdmin
+          .from("bookings")
+          .insert({
+            user_id: userId,
+            guest_name: d.guestName,
+            guest_email: d.guestEmail,
+            guest_phone: d.guestPhone,
+            room_id: first.room.id,
+            room_type: quote.lines.length === 1 ? first.room.name : roomSummary,
+            check_in: checkIn,
+            check_out: checkOut,
+            nights: quote.nights,
+            guests: totalGuests,
+            amount: quote.grandTotal,
+            status: "pending",
+            payment_status: "unpaid",
+            source: "website",
+            special_requests: d.specialRequests ?? null,
+            razorpay_order_id: order.id,
+          })
+          .select("id")
+          .single();
+
+        if (!error && booking) {
+          try {
+            const rows = quote.lines.map((l) => ({
+              booking_id: booking.id,
+              room_id: l.room.id,
+              room_type: l.room.name,
+              quantity: l.quantity,
+              adults: l.adults,
+              children: l.children,
+              extra_bed: l.extraBed,
+              unit_price: l.unitPrice,
+              price: l.lineTotal,
+              notes: l.notes,
+            }));
+            await supabaseAdmin.from("booking_rooms").insert(rows);
+          } catch (e) {
+            console.error("booking_rooms insert error", e);
+          }
+        }
+
         const roomName =
           quote.lines.length === 1
             ? `${quote.lines[0].room.name}${quote.lines[0].quantity > 1 ? ` ×${quote.lines[0].quantity}` : ""}`
