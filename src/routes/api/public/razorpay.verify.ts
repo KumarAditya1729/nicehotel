@@ -126,17 +126,17 @@ export const Route = createFileRoute("/api/public/razorpay/verify")({
 
           const data = {
             name: booking.guest_name,
-            email: booking.guest_email,
-            phone: booking.guest_phone,
-            checkIn: booking.check_in,
-            checkOut: booking.check_out,
+            email: booking.guest_email || "",
+            phone: booking.guest_phone || "",
+            checkIn: booking.check_in || "",
+            checkOut: booking.check_out || "",
             guests: String(booking.guests),
-            roomType: booking.room_type,
-            requests: `${booking.special_requests ?? ""}${booking.special_requests ? " · " : ""}Rooms: ${roomsBreakdown} · Subtotal ₹${subtotal.toLocaleString("en-IN")} + GST ₹${taxes.toLocaleString("en-IN")} = ₹${grandTotal.toLocaleString("en-IN")} (${booking.nights} night${booking.nights > 1 ? "s" : ""}) · Payment ID ${d.razorpay_payment_id}`,
+            roomType: booking.room_type || "",
+            requests: `${booking.special_requests ?? ""}${booking.special_requests ? " · " : ""}Rooms: ${roomsBreakdown} · Subtotal ₹${subtotal.toLocaleString("en-IN")} + GST ₹${taxes.toLocaleString("en-IN")} = ₹${grandTotal.toLocaleString("en-IN")} (${booking.nights || 1} night${(booking.nights || 1) > 1 ? "s" : ""}) · Payment ID ${d.razorpay_payment_id}`,
           };
           await sendEmails([
             {
-              to: booking.guest_email,
+              to: booking.guest_email || "",
               subject: "Booking confirmed — Nice Hotel & Restaurant",
               html: t.bookingGuestEmail(data),
             },
@@ -144,7 +144,7 @@ export const Route = createFileRoute("/api/public/razorpay/verify")({
               to: adminEmail(),
               subject: `New paid booking: ${booking.guest_name}`,
               html: t.bookingAdminEmail(data),
-              reply: booking.guest_email,
+              reply: booking.guest_email || undefined,
             },
           ]);
         } catch (e) {
